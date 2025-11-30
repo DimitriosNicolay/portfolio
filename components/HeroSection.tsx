@@ -13,7 +13,7 @@ export default function HeroSection() {
           </h1>
           <div className="w-24 h-px bg-gray-900 dark:bg-white mx-auto" />
           <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-light tracking-wide">
-            DevOps Engineer | Infrastructure Automation
+            IT Specialist for System Integration | Infrastructure Automation
           </p>
         </div>
 

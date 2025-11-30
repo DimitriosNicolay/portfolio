@@ -17,7 +17,13 @@ export default function Footer() {
               Dimitrios Nicolay
             </h3>
             <p className="text-sm text-gray-500 font-light leading-relaxed">
-              IT Specialist for System Integration | DevOps Engineer | Homelab Explorer
+              IT Specialist for System Integration
+            </p>
+            <p className="text-sm text-gray-500 font-light leading-relaxed">
+              Reliable infrastructure | Automated deployments
+            </p>
+            <p className="text-sm text-gray-500 font-light leading-relaxed">
+              Operator of AS204801 | GL-IX Internet Exchange.
             </p>
           </div>
 
