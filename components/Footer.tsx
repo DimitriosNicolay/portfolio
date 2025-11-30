@@ -1,7 +1,7 @@
 'use client';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 export default function Footer() {
@@ -17,7 +17,7 @@ export default function Footer() {
               Dimitrios Nicolay
             </h3>
             <p className="text-sm text-gray-500 font-light leading-relaxed">
-              DevOps Engineer | NixOS Enthusiast | Homelab Explorer
+              IT Specialist for System Integration | DevOps Engineer | Homelab Explorer
             </p>
           </div>
 
@@ -26,11 +26,13 @@ export default function Footer() {
             <h3 className="text-lg font-light text-gray-900 dark:text-white tracking-wide">
               Links
             </h3>
-            <ul className="space-y-2">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-2">
               <FooterLink href="#about">About</FooterLink>
+              <FooterLink href="/impressum">Impressum</FooterLink>
               <FooterLink href="#tech">Tech Stack</FooterLink>
+              <FooterLink href="/datenschutz">Datenschutz</FooterLink>
               <FooterLink href="#projects">Projects</FooterLink>
-            </ul>
+            </div>
           </div>
 
           {/* Connect */}
@@ -47,6 +49,15 @@ export default function Footer() {
                 aria-label="GitHub"
               >
                 <FontAwesomeIcon icon={faGithub} className="text-gray-600 dark:text-gray-400" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/dimitrios-nicolay"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 border border-gray-300 dark:border-white/20 flex items-center justify-center hover:border-gray-500 dark:hover:border-white/40 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
+                aria-label="LinkedIn"
+              >
+                <FontAwesomeIcon icon={faLinkedin} className="text-gray-600 dark:text-gray-400" />
               </a>
               <a
                 href="mailto:hey@dnicolay.de"
@@ -72,13 +83,11 @@ export default function Footer() {
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <li>
-      <a
-        href={href}
-        className="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors duration-300 font-light"
-      >
-        {children}
-      </a>
-    </li>
+    <a
+      href={href}
+      className="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors duration-300 font-light block"
+    >
+      {children}
+    </a>
   );
 }

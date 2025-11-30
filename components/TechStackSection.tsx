@@ -1,39 +1,65 @@
 'use client';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLinux, faDocker, faAws, faRust, faNode } from '@fortawesome/free-brands-svg-icons';
-import { faServer, faCube, faDatabase, faChartLine, faCloud, faCode } from '@fortawesome/free-solid-svg-icons';
+import { faAws } from '@fortawesome/free-brands-svg-icons';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import {
+  siNixos,
+  siProxmox,
+  siDocker,
+  siAnsible,
+  siTerraform,
+  siTypescript,
+  siNextdotjs,
+  siTailwindcss,
+  siPostgresql,
+  siExpress,
+  siKubernetes,
+  siPrometheus,
+  siGrafana,
+  siRust,
+} from 'simple-icons';
+
+interface Technology {
+  name: string;
+  icon: {
+    slug?: string;
+    hex?: string;
+    path?: string;
+  } | IconDefinition;
+  url: string;
+}
 
 const techStack = [
   {
     category: 'Infrastructure',
     technologies: [
-      { name: 'NixOS', icon: faLinux },
-      { name: 'Proxmox', icon: faServer },
-      { name: 'Docker', icon: faDocker },
-      { name: 'Ansible', icon: faCode },
-      { name: 'Terraform', icon: faCube },
-    ],
+      { name: 'NixOS', icon: siNixos, url: 'https://nixos.org' },
+      { name: 'Proxmox', icon: siProxmox, url: 'https://www.proxmox.com' },
+      { name: 'Docker', icon: siDocker, url: 'https://www.docker.com' },
+      { name: 'Ansible', icon: siAnsible, url: 'https://www.ansible.com' },
+      { name: 'Terraform', icon: siTerraform, url: 'https://www.terraform.io' },
+    ] as Technology[],
   },
   {
     category: 'Development',
     technologies: [
-      { name: 'TypeScript', icon: faCode },
-      { name: 'Next.js', icon: faNode },
-      { name: 'TailwindCSS', icon: faCode },
-      { name: 'Postgres', icon: faDatabase },
-      { name: 'Express.js', icon: faNode },
-    ],
+      { name: 'TypeScript', icon: siTypescript, url: 'https://www.typescriptlang.org' },
+      { name: 'Next.js', icon: siNextdotjs, url: 'https://nextjs.org' },
+      { name: 'TailwindCSS', icon: siTailwindcss, url: 'https://tailwindcss.com' },
+      { name: 'Postgres', icon: siPostgresql, url: 'https://www.postgresql.org' },
+      { name: 'Express.js', icon: siExpress, url: 'https://expressjs.com' },
+    ] as Technology[],
   },
   {
     category: 'Learning',
     technologies: [
-      { name: 'Kubernetes', icon: faCube },
-      { name: 'Prometheus', icon: faChartLine },
-      { name: 'Grafana', icon: faChartLine },
-      { name: 'AWS', icon: faAws },
-      { name: 'Rust', icon: faRust },
-    ],
+      { name: 'Kubernetes', icon: siKubernetes, url: 'https://kubernetes.io' },
+      { name: 'Prometheus', icon: siPrometheus, url: 'https://prometheus.io' },
+      { name: 'Grafana', icon: siGrafana, url: 'https://grafana.com' },
+      { name: 'AWS', icon: faAws, url: 'https://aws.amazon.com' },
+      { name: 'Rust', icon: siRust, url: 'https://www.rust-lang.org' },
+    ] as Technology[],
   },
 ];
 
@@ -56,15 +82,32 @@ export default function TechStackSection() {
               </h3>
               <div className="space-y-4">
                 {stack.technologies.map((tech) => (
-                  <div
+                  <a
                     key={tech.name}
-                    className="py-3 px-4 border-l border-gray-300 dark:border-white/10 hover:border-gray-500 dark:hover:border-white/40 transition-colors duration-300 flex items-center gap-3"
+                    href={tech.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-3 px-4 border-l border-gray-300 dark:border-white/10 hover:border-gray-500 dark:hover:border-white/40 transition-colors duration-300 flex items-center gap-3 group"
                   >
-                    <FontAwesomeIcon icon={tech.icon} className="text-gray-500 dark:text-gray-500 w-4 h-4" />
-                    <span className="text-base font-light text-gray-700 dark:text-gray-300">
+                    {'path' in tech.icon ? (
+                      <svg
+                        role="img"
+                        viewBox="0 0 24 24"
+                        className="w-5 h-5 fill-current text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d={tech.icon.path} />
+                      </svg>
+                    ) : (
+                      <FontAwesomeIcon 
+                        icon={tech.icon as IconDefinition} 
+                        className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors" 
+                      />
+                    )}
+                    <span className="text-base font-light text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
                       {tech.name}
                     </span>
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>

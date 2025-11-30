@@ -38,6 +38,11 @@ export default function RootLayout({
             `,
           }}
         />
+        <script
+          defer
+          data-domain="yourdomain.com"
+          src="https://plausible.io/js/script.js"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

@@ -50,11 +50,13 @@ export default function ContactSidebar() {
           <div className="space-y-4 text-sm">
             <ContactItem 
               label="Email" 
-              value="hey@dnicolay.de" 
+              value="hey@dnicolay.de"
+              link="mailto:hey@dnicolay.de"
             />
             <ContactItem 
               label="Network" 
-              value="AS204801" 
+              value="AS204801"
+              link="https://bgp.tools/as/204801"
             />
           </div>
 
@@ -72,7 +74,7 @@ export default function ContactSidebar() {
               <FontAwesomeIcon icon={faGithub} className="text-gray-600 dark:text-gray-400" />
             </a>
             <a
-              href="https://linkedin.com/in/dimitrios-nicolay"
+              href="https://www.linkedin.com/in/dimitrios-nicolay-29a58530a/"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 border border-gray-300 dark:border-white/20 flex items-center justify-center hover:border-gray-500 dark:hover:border-white/40 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
@@ -94,15 +96,34 @@ export default function ContactSidebar() {
   );
 }
 
-function ContactItem({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="space-y-1">
+function ContactItem({ label, value, link }: { label: string; value: string; link?: string }) {
+  const content = (
+    <>
       <p className="text-xs text-gray-500 dark:text-gray-600 uppercase tracking-wider">
         {label}
       </p>
       <p className="text-sm text-gray-700 dark:text-gray-400 font-light">
         {value}
       </p>
+    </>
+  );
+
+  if (link) {
+    return (
+      <a 
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block space-y-1 hover:text-gray-900 dark:hover:text-white transition-colors"
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <div className="space-y-1">
+      {content}
     </div>
   );
 }
