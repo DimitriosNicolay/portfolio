@@ -92,7 +92,7 @@ sudo usermod -aG docker deploy
 ### Install Node.js:
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo apt install -y nodejs
+sudo apt install -y nodejs git
 ```
 
 ### Install Nginx:
@@ -113,65 +113,27 @@ ssh deploy@95.217.xxx.xxx
 
 ---
 
-## 5️⃣ Deploy Plausible Analytics
+## 5️⃣ Setup Project Directory
 
-### Create directory structure:
+### Create application directory:
 ```bash
-mkdir -p ~/plausible
-cd ~/plausible
+mkdir -p ~/apps
+cd ~/apps
 ```
 
-### Create docker-compose.yml:
+### Clone your portfolio repository:
 ```bash
-cat > docker-compose.yml << 'EOF'
-version: "3.8"
+git clone https://github.com/DimitriosNicolay/portfolio.git
+cd portfolio
+```
 
-services:
-  plausible_db:
-    image: postgres:16-alpine
-    restart: always
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=postgres
+---
 
-  plausible_events_db:
-    image: clickhouse/clickhouse-server:24.3.3.102-alpine
-    restart: always
-    volumes:
-      - event-data:/var/lib/clickhouse
-      - event-logs:/var/log/clickhouse-server
-      - ./clickhouse/clickhouse-config.xml:/etc/clickhouse-server/config.d/logging.xml:ro
-      - ./clickhouse/clickhouse-user-config.xml:/etc/clickhouse-server/users.d/logging.xml:ro
-    ulimits:
-      nofile:
-        soft: 262144
-        hard: 262144
+## 6️⃣ Configure Docker Compose
 
-  plausible:
-    image: ghcr.io/plausible/community-edition:v2.1.1
-    restart: always
-    command: sh -c "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh run"
-    depends_on:
-      - plausible_db
-      - plausible_events_db
-    ports:
-      - "127.0.0.1:8000:8000"
-    environment:
-      - BASE_URL=https://analytics.dnicolay.de
-      - SECRET_KEY_BASE=CHANGEME_GENERATE_A_RANDOM_64_CHAR_STRING
-      - TOTP_VAULT_KEY=CHANGEME_GENERATE_A_RANDOM_32_CHAR_STRING
-      - DATABASE_URL=postgres://postgres:postgres@plausible_db:5432/plausible_db
-      - CLICKHOUSE_DATABASE_URL=http://plausible_events_db:8123/plausible_events_db
-
-volumes:
-  db-data:
-    driver: local
-  event-data:
-    driver: local
-  event-logs:
-    driver: local
-EOF
+### Copy production config:
+```bash
+cp docker-compose.production.yml.example docker-compose.production.yml
 ```
 
 ### Create ClickHouse config directory:
@@ -198,78 +160,68 @@ cat > clickhouse/clickhouse-user-config.xml << 'EOF'
 EOF
 ```
 
-### Generate SECRET_KEY_BASE (64 chars):
+### Generate secrets:
 ```bash
-openssl rand -base64 48
+# Generate SECRET_KEY_BASE (64 chars)
+echo "SECRET_KEY_BASE=$(openssl rand -base64 48)"
+
+# Generate TOTP_VAULT_KEY (32 chars)
+echo "TOTP_VAULT_KEY=$(openssl rand -base64 24)"
 ```
 
-### Generate TOTP_VAULT_KEY (32 chars):
+### Edit docker-compose.production.yml:
 ```bash
-openssl rand -base64 24
+nano docker-compose.production.yml
 ```
 
-### Edit docker-compose.yml and replace:
+Replace these values in the `plausible` service:
+- `CHANGEME_GENERATE_A_RANDOM_64_CHAR_STRING` → Your SECRET_KEY_BASE
+- `CHANGEME_GENERATE_A_RANDOM_32_CHAR_STRING` → Your TOTP_VAULT_KEY
+
+Save and exit (Ctrl+X, Y, Enter)
+
+---
+
+## 7️⃣ Build and Start Services
+
+### Build the portfolio Docker image:
 ```bash
-nano docker-compose.yml
-# Replace CHANGEME_GENERATE_A_RANDOM_64_CHAR_STRING with SECRET_KEY_BASE
-# Replace CHANGEME_GENERATE_A_RANDOM_32_CHAR_STRING with TOTP_VAULT_KEY
+docker build -t portfolio:latest .
 ```
 
-### Start Plausible:
+### Start all services:
 ```bash
-docker compose up -d
+docker compose -f docker-compose.production.yml up -d
 ```
+
+### Check that services are running:
+```bash
+docker compose -f docker-compose.production.yml ps
+```
+
+You should see:
+- `plausible_db` (running)
+- `plausible_events_db` (running)  
+- `plausible` (running)
+- `portfolio` (running)
 
 ### Check logs:
 ```bash
-docker compose logs -f plausible
+# All services
+docker compose -f docker-compose.production.yml logs -f
+
+# Just portfolio
+docker compose -f docker-compose.production.yml logs -f portfolio
+
+# Just Plausible
+docker compose -f docker-compose.production.yml logs -f plausible
 ```
 
-Wait for: "Application started successfully" (takes 1-2 minutes)
+Wait for Plausible to show: "Application started successfully" (1-2 minutes)
 
 ---
 
-## 6️⃣ Deploy Portfolio Website
-
-### Clone repository:
-```bash
-cd ~
-git clone https://github.com/DimitriosNicolay/portfolio.git
-cd portfolio
-```
-
-### Install dependencies:
-```bash
-npm install
-```
-
-### Build production bundle:
-```bash
-npm run build
-```
-
-### Install PM2 for process management:
-```bash
-sudo npm install -g pm2
-```
-
-### Start Next.js with PM2:
-```bash
-pm2 start npm --name "portfolio" -- start
-pm2 save
-pm2 startup
-# Copy and run the command PM2 outputs
-```
-
-### Verify it's running:
-```bash
-pm2 status
-curl localhost:3000
-```
-
----
-
-## 7️⃣ Configure Nginx with Let's Encrypt SSL
+## 8️⃣ Configure Nginx with Let's Encrypt SSL
 
 ### Create Nginx config for portfolio:
 ```bash
@@ -342,7 +294,7 @@ sudo systemctl reload nginx
 
 ---
 
-## 8️⃣ Setup Let's Encrypt SSL
+## 9️⃣ Setup Let's Encrypt SSL
 
 ### Obtain SSL certificates:
 ```bash
@@ -362,7 +314,7 @@ sudo certbot renew --dry-run
 
 ---
 
-## 9️⃣ Setup Plausible Admin Account
+## 🔟 Setup Plausible Admin Account
 
 ### Visit Plausible:
 ```
@@ -375,7 +327,7 @@ https://analytics.dnicolay.de/register
 
 ---
 
-## 🔟 Setup Firewall
+## 1️⃣1️⃣ Setup Firewall
 
 ### Configure UFW:
 ```bash
@@ -393,7 +345,7 @@ sudo ufw status
 
 ---
 
-## ✅ Verify Deployment
+## 1️⃣2️⃣ Verify Deployment
 
 ### Test portfolio:
 ```
@@ -415,31 +367,53 @@ https://www.ssllabs.com/ssltest/analyze.html?d=dnicolay.de
 ## 🔄 Update Portfolio (Future Deployments)
 
 ```bash
-cd ~/portfolio
+cd ~/apps/portfolio
 git pull
-npm install
-npm run build
-pm2 restart portfolio
+docker build -t portfolio:latest .
+docker compose -f docker-compose.production.yml up -d portfolio
+```
+
+Or rebuild everything:
+```bash
+docker compose -f docker-compose.production.yml down
+docker compose -f docker-compose.production.yml up -d --build
 ```
 
 ---
 
 ## 🛠️ Useful Commands
 
-### Check portfolio logs:
+### Check all container logs:
 ```bash
-pm2 logs portfolio
+cd ~/apps/portfolio
+docker compose -f docker-compose.production.yml logs -f
 ```
 
-### Check Plausible logs:
+### Check specific service:
 ```bash
-cd ~/plausible
-docker compose logs -f plausible
+docker compose -f docker-compose.production.yml logs -f portfolio
+docker compose -f docker-compose.production.yml logs -f plausible
 ```
 
-### Restart Nginx:
+### Restart services:
 ```bash
-sudo systemctl restart nginx
+docker compose -f docker-compose.production.yml restart portfolio
+docker compose -f docker-compose.production.yml restart plausible
+```
+
+### Stop all services:
+```bash
+docker compose -f docker-compose.production.yml down
+```
+
+### Start all services:
+```bash
+docker compose -f docker-compose.production.yml up -d
+### Check running processes:
+```bash
+docker compose -f docker-compose.production.yml ps
+docker stats
+```o systemctl restart nginx
 ```
 
 ### Renew SSL manually:
@@ -479,8 +453,8 @@ docker ps
 
 3. **Regular backups** of Plausible data:
    ```bash
-   cd ~/plausible
-   docker compose exec plausible_db pg_dump -U postgres plausible_db > backup.sql
+   cd ~/apps/portfolio
+   docker compose -f docker-compose.production.yml exec plausible_db pg_dump -U postgres plausible_db > backup_$(date +%Y%m%d).sql
    ```
 
 ---
@@ -498,16 +472,19 @@ docker ps
 
 ### Portfolio not loading:
 ```bash
-pm2 logs portfolio
+cd ~/apps/portfolio
+docker compose -f docker-compose.production.yml logs portfolio
+docker compose -f docker-compose.production.yml restart portfolio
 sudo nginx -t
 sudo systemctl status nginx
 ```
 
 ### Plausible not loading:
 ```bash
-cd ~/plausible
-docker compose logs plausible
-docker compose ps
+cd ~/apps/portfolio
+docker compose -f docker-compose.production.yml logs plausible
+docker compose -f docker-compose.production.yml ps
+docker compose -f docker-compose.production.yml restart plausible
 ```
 
 ### SSL certificate issues:
