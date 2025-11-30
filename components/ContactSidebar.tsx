@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 export default function ContactSidebar() {
@@ -70,6 +70,15 @@ export default function ContactSidebar() {
               aria-label="GitHub"
             >
               <FontAwesomeIcon icon={faGithub} className="text-gray-600 dark:text-gray-400" />
+            </a>
+            <a
+              href="https://linkedin.com/in/dimitrios-nicolay"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 border border-gray-300 dark:border-white/20 flex items-center justify-center hover:border-gray-500 dark:hover:border-white/40 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
+              aria-label="LinkedIn"
+            >
+              <FontAwesomeIcon icon={faLinkedin} className="text-gray-600 dark:text-gray-400" />
             </a>
             <a
               href="mailto:hey@dnicolay.de"

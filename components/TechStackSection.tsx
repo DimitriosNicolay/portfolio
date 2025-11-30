@@ -1,17 +1,39 @@
 'use client';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLinux, faDocker, faAws, faRust, faNode } from '@fortawesome/free-brands-svg-icons';
+import { faServer, faCube, faDatabase, faChartLine, faCloud, faCode } from '@fortawesome/free-solid-svg-icons';
+
 const techStack = [
   {
     category: 'Infrastructure',
-    technologies: ['NixOS', 'Proxmox', 'Docker', 'Ansible', 'Terraform'],
+    technologies: [
+      { name: 'NixOS', icon: faLinux },
+      { name: 'Proxmox', icon: faServer },
+      { name: 'Docker', icon: faDocker },
+      { name: 'Ansible', icon: faCode },
+      { name: 'Terraform', icon: faCube },
+    ],
   },
   {
     category: 'Development',
-    technologies: ['TypeScript', 'Next.js', 'TailwindCSS', 'Postgres', 'Express.js'],
+    technologies: [
+      { name: 'TypeScript', icon: faCode },
+      { name: 'Next.js', icon: faNode },
+      { name: 'TailwindCSS', icon: faCode },
+      { name: 'Postgres', icon: faDatabase },
+      { name: 'Express.js', icon: faNode },
+    ],
   },
   {
     category: 'Learning',
-    technologies: ['Kubernetes', 'Prometheus', 'Grafana', 'AWS', 'Rust'],
+    technologies: [
+      { name: 'Kubernetes', icon: faCube },
+      { name: 'Prometheus', icon: faChartLine },
+      { name: 'Grafana', icon: faChartLine },
+      { name: 'AWS', icon: faAws },
+      { name: 'Rust', icon: faRust },
+    ],
   },
 ];
 
@@ -35,11 +57,12 @@ export default function TechStackSection() {
               <div className="space-y-4">
                 {stack.technologies.map((tech) => (
                   <div
-                    key={tech}
-                    className="py-3 px-4 border-l border-gray-300 dark:border-white/10 hover:border-gray-500 dark:hover:border-white/40 transition-colors duration-300"
+                    key={tech.name}
+                    className="py-3 px-4 border-l border-gray-300 dark:border-white/10 hover:border-gray-500 dark:hover:border-white/40 transition-colors duration-300 flex items-center gap-3"
                   >
+                    <FontAwesomeIcon icon={tech.icon} className="text-gray-500 dark:text-gray-500 w-4 h-4" />
                     <span className="text-base font-light text-gray-700 dark:text-gray-300">
-                      {tech}
+                      {tech.name}
                     </span>
                   </div>
                 ))}
