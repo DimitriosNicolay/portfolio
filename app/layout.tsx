@@ -40,8 +40,8 @@ export default function RootLayout({
         />
         <script
           defer
-          data-domain="yourdomain.com"
-          src="https://plausible.io/js/script.js"
+          data-domain="dnicolay.de"
+          src="https://analytics.dnicolay.de/js/script.js"
         />
       </head>
       <body
