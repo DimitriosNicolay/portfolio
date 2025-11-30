@@ -1,6 +1,15 @@
 'use client';
 
+import { useState } from 'react';
+
 const projects = [
+  {
+    id: 7,
+    title: 'Portfolio Website',
+    description: 'Personal portfolio built with Next.js, featuring WebGL smoke effects, dark/light theme switching, and minimal noir design aesthetic.',
+    tags: ['Next.js', 'Three.js', 'WebGL'],
+    link: '/projects/portfolio',
+  },
   {
     id: 1,
     title: 'GL-IX Internet Exchange',
@@ -46,6 +55,23 @@ const projects = [
 ];
 
 export default function ProjectsSection() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const projectsPerPage = 6;
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
+
+  const startIndex = (currentPage - 1) * projectsPerPage;
+  const endIndex = startIndex + projectsPerPage;
+  const currentProjects = projects.slice(startIndex, endIndex);
+
+  const handlePageChange = (newPage: number) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentPage(newPage);
+      setIsTransitioning(false);
+    }, 400);
+  };
+
   return (
     <section id="projects" className="min-h-screen flex items-center justify-center px-8 py-24">
       <div className="max-w-6xl mx-auto w-full">
@@ -56,11 +82,39 @@ export default function ProjectsSection() {
           <div className="w-16 h-px bg-gray-900 dark:bg-white" />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((project) => (
+        <div 
+          className={`grid md:grid-cols-2 gap-8 transition-all duration-400 ease-in-out ${
+            isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+          }`}
+        >
+          {currentProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
+
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-6 mt-16">
+            <button
+              onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+              disabled={currentPage === 1 || isTransitioning}
+              className="w-10 h-10 border border-gray-300 dark:border-white/20 text-gray-600 dark:text-gray-400 hover:border-gray-500 dark:hover:border-white/40 hover:text-gray-900 dark:hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center"
+              aria-label="Previous page"
+            >
+              ←
+            </button>
+            <span className="text-xs text-gray-500 dark:text-gray-600 font-light tracking-wider">
+              {currentPage}/{totalPages}
+            </span>
+            <button
+              onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
+              disabled={currentPage === totalPages || isTransitioning}
+              className="w-10 h-10 border border-gray-300 dark:border-white/20 text-gray-600 dark:text-gray-400 hover:border-gray-500 dark:hover:border-white/40 hover:text-gray-900 dark:hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center"
+              aria-label="Next page"
+            >
+              →
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
