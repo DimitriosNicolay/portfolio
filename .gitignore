@@ -43,3 +43,12 @@ next-env.d.ts
 # deployment configuration (contains secrets)
 docker-compose.production.yml
 clickhouse/
+
+# deployment and setup documentation
+DEPLOYMENT.md
+PORTFOLIO_README.md
+SETUP_GUIDE.md
+
+# legal pages (contain personal information)
+app/privacy-policy/page.tsx
+app/legal-notice/page.tsx

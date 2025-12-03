@@ -34,9 +34,9 @@ export default function Footer() {
             </h3>
             <div className="grid grid-cols-2 gap-x-8 gap-y-2">
               <FooterLink href="#about">About</FooterLink>
-              <FooterLink href="/impressum">Impressum</FooterLink>
+              <FooterLink href="/legal-notice">Impressum</FooterLink>
               <FooterLink href="#tech">Tech Stack</FooterLink>
-              <FooterLink href="/datenschutz">Datenschutz</FooterLink>
+              <FooterLink href="/privacy-policy">Datenschutz</FooterLink>
               <FooterLink href="#projects">Projects</FooterLink>
             </div>
           </div>

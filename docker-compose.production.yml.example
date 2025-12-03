@@ -2,8 +2,6 @@
 # ⚠️ IMPORTANT: Copy this to your server and configure secrets!
 # This file is git-ignored for security reasons.
 
-version: "3.8"
-
 services:
   # PostgreSQL Database for Plausible
   plausible_db:
@@ -45,9 +43,9 @@ services:
     environment:
       # CHANGE THIS: Generate with: openssl rand -base64 48
       - SECRET_KEY_BASE=CHANGEME_GENERATE_A_RANDOM_64_CHAR_STRING
-      # CHANGE THIS: Generate with: openssl rand -base64 24
-      - TOTP_VAULT_KEY=CHANGEME_GENERATE_A_RANDOM_32_CHAR_STRING
-      - BASE_URL=https://analytics.dnicolay.de
+      # CHANGE THIS: Generate with: openssl rand -hex 32
+      - TOTP_VAULT_KEY=CHANGEME_GENERATE_A_RANDOM_64_HEX_STRING
+      - BASE_URL=https://analytics.yourdomain.com
       - DATABASE_URL=postgres://postgres:postgres@plausible_db:5432/plausible_db
       - CLICKHOUSE_DATABASE_URL=http://plausible_events_db:8123/plausible_events_db
     networks:
@@ -56,7 +54,7 @@ services:
   # Portfolio Next.js Application
   portfolio:
     build:
-      context: ./portfolio
+      context: .
       dockerfile: Dockerfile
     restart: always
     ports:
