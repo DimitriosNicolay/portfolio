@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dimitrios Nicolay - DevOps Engineer",
-  description: "Portfolio of Dimitrios Nicolay - DevOps Engineer specializing in infrastructure automation, containerization, and cloud-native solutions",
+  title: "Dimitrios Nicolay",
+  description: "Portfolio of Dimitrios Nicolay - IT specialist for system integration specializing in infrastructure automation, containerization, and cloud-native solutions",
 };
 
 export default function RootLayout({
