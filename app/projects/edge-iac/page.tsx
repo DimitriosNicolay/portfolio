@@ -31,13 +31,13 @@ return (
         <article className="prose prose-lg dark:prose-invert max-w-none">
           <div className="mb-16 border border-gray-300 dark:border-white/10 p-0 overflow-hidden">
             <img
-              src="/images/projects/edge-iac/iacDiagram.svg"
+              src="/images/projects/edge-iac/anycastNetwork.jpg"
               alt="Edge IaC reference architecture diagram"
               className="block w-full h-auto max-h-[60vh] object-contain bg-gray-100 dark:bg-black"
             />
             <div className="p-6 border-t border-gray-300 dark:border-white/10">
               <p className="text-sm text-gray-500 dark:text-gray-500 font-light m-0">
-                Reference architecture and delivery workflow (sanitized)
+                Visualisation of an anycast network
               </p>
             </div>
           </div>
