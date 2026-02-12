@@ -13,7 +13,7 @@ import {
   siNextdotjs,
   siTailwindcss,
   siPostgresql,
-  siExpress,
+  siGo,
   siKubernetes,
   siPrometheus,
   siGrafana,
@@ -48,7 +48,7 @@ const techStack = [
       { name: 'Next.js', icon: siNextdotjs, url: 'https://nextjs.org' },
       { name: 'TailwindCSS', icon: siTailwindcss, url: 'https://tailwindcss.com' },
       { name: 'Postgres', icon: siPostgresql, url: 'https://www.postgresql.org' },
-      { name: 'Express.js', icon: siExpress, url: 'https://expressjs.com' },
+      { name: 'Go', icon: siGo, url: 'https://go.dev' },
     ] as Technology[],
   },
   {
