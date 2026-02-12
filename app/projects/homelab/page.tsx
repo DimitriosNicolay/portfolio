@@ -1,7 +1,7 @@
 export default function HomelabProject() {
   return (
     <main className="min-h-screen text-gray-900 dark:text-white px-8 py-24">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="mb-16">
           <a 
             href="/#projects" 
@@ -30,10 +30,12 @@ export default function HomelabProject() {
 
         <article className="prose prose-lg dark:prose-invert max-w-none">
           {/* Project Image Card */}
-          <div className="mb-16 border border-gray-300 dark:border-white/10 p-0 overflow-hidden">
-            <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-black flex items-center justify-center">
-              <span className="text-gray-400 dark:text-gray-600 text-sm font-light tracking-wide">Project Image</span>
-            </div>
+          <div className="mb-16 border border-gray-300 dark:border-white/10 p-0 overflow-hidden aspect-video">
+            <img
+              src="/images/projects/homelab/screenshot.jpg"
+              alt="Homelab infrastructure stack"
+              className="w-full h-full object-cover bg-gray-100 dark:bg-black"
+            />
             <div className="p-6 border-t border-gray-300 dark:border-white/10">
               <p className="text-sm text-gray-500 dark:text-gray-500 font-light m-0">Homelab Infrastructure Stack</p>
             </div>
