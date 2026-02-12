@@ -1,64 +1,65 @@
 export default function PortfolioProject() {
   return (
-    <main className="min-h-screen text-gray-900 dark:text-white px-8 py-24">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-16">
+    <main className="project-main">
+      <div className="project-container">
+        <div className="project-header">
           <a
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors mb-8"
+            className="project-back-link"
           >
             ← Back to Home
           </a>
 
-          <h1 className="text-5xl font-light tracking-wide mb-6">
+          <h1 className="project-title">
             Portfolio Website
           </h1>
 
-          <div className="flex flex-wrap gap-3 mb-8">
+          <div className="project-tags">
             {['Next.js', 'Three.js', 'WebGL'].map((tag) => (
               <span
                 key={tag}
-                className="px-4 py-1 border border-gray-300 dark:border-white/20 text-sm font-light tracking-wide"
+                className="project-tag"
               >
                 {tag}
               </span>
             ))}
           </div>
 
-          <div className="w-24 h-px bg-gray-900 dark:bg-white mb-12" />
+          <div className="project-divider" />
         </div>
 
-        <article className="prose prose-lg dark:prose-invert max-w-none">
-          <div className="mb-16 border border-gray-300 dark:border-white/10 p-0 overflow-hidden aspect-video">
-            <img
-              src="/images/projects/portfolio/website.jpg"
-              alt="Portfolio website screenshot"
-              className="w-full h-full object-cover bg-gray-100 dark:bg-black"
-            />
-            <div className="p-6 border-t border-gray-300 dark:border-white/10">
-              <p className="text-sm text-gray-500 dark:text-gray-500 font-light m-0">
-                Screenshot of the portfolio website
-              </p>
+        <article className="project-article">
+          <div className="project-card">
+            <div className="project-image-container">
+                <div
+                  className="project-image-bg"
+                  style={{ backgroundImage: "url('/images/projects/portfolio/website.jpg')" }}
+                  role="img"
+                  aria-label="Portfolio website screenshot"
+                />
+              </div>
+            <div className="project-card-caption">
+              <p className="project-card-caption-text">Screenshot of the portfolio website</p>
             </div>
           </div>
 
-          <section className="mb-12">
-            <h2 className="text-2xl font-light mb-4">Overview</h2>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+          <section className="project-section">
+            <h2 className="project-heading">Overview</h2>
+            <p className="project-text">
               A personal portfolio website built from scratch using modern web technologies. Features an interactive WebGL smoke background, smooth theme transitions, and a minimal noir design aesthetic. The site showcases projects, technical skills, and professional experience while maintaining excellent performance and privacy standards.
             </p>
           </section>
 
-          <section className="mb-12">
-            <h2 className="text-2xl font-light mb-4">Technical Implementation</h2>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+          <section className="project-section">
+            <h2 className="project-heading">Technical Implementation</h2>
+            <p className="project-text">
               Built with Next.js 16 and React, utilizing server-side rendering for optimal SEO and performance. The WebGL background uses Three.js with custom GLSL shaders implementing Fractional Brownian Motion (FBM) for realistic smoke effects. Mouse interactions create dynamic distortions through smooth interpolation. Theme switching persists via localStorage and smoothly transitions between dark and light modes without recreating the WebGL context.
             </p>
           </section>
 
-          <section className="mb-12">
-            <h2 className="text-2xl font-light mb-4">Key Features</h2>
-            <ul className="text-gray-600 dark:text-gray-400 leading-relaxed space-y-2">
+          <section className="project-section">
+            <h2 className="project-heading">Key Features</h2>
+            <ul className="project-list">
               <li>Interactive WebGL smoke background with mouse tracking</li>
               <li>Smooth dark/light theme switching with localStorage persistence</li>
               <li>Responsive design optimized for all screen sizes</li>
@@ -70,9 +71,9 @@ export default function PortfolioProject() {
             </ul>
           </section>
 
-          <section className="mb-12">
-            <h2 className="text-2xl font-light mb-4">Technologies Used</h2>
-            <ul className="text-gray-600 dark:text-gray-400 leading-relaxed space-y-2">
+          <section className="project-section">
+            <h2 className="project-heading">Technologies Used</h2>
+            <ul className="project-list">
               <li><strong>Frontend:</strong> Next.js 16, React, TypeScript</li>
               <li><strong>Styling:</strong> Tailwind CSS v3 with custom dark mode configuration</li>
               <li><strong>Graphics:</strong> Three.js (@react-three/fiber), GLSL shaders</li>
@@ -83,11 +84,11 @@ export default function PortfolioProject() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-light mb-4">Development Highlights</h2>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+            <h2 className="project-heading">Development Highlights</h2>
+            <p className="project-text">
               The project emphasized performance optimization and user experience. WebGL uniforms use React useRef to prevent shader recreation on theme changes, ensuring smooth transitions. The smoke effect underwent multiple iterations to achieve the desired "noir" aesthetic with fine, flowing lines rather than dense clouds. All external resources are self-hosted to maintain privacy and reduce external dependencies.
             </p>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mt-4">
+            <p className="project-text mt-4">
               Special attention was paid to GDPR compliance, implementing a comprehensive privacy policy and ensuring no tracking occurs without user awareness. The site uses localStorage only for theme preferences and Plausible Analytics for aggregated, anonymous statistics without cookies.
             </p>
           </section>
