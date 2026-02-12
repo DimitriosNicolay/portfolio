@@ -10,15 +10,25 @@ export default function ContactSidebar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    const sidebarWidth = 'clamp(14rem, 20vw, 16rem)';
+
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = Math.min(scrollTop / (docHeight * 0.3), 1);
       setScrollProgress(progress);
+      document.documentElement.style.setProperty(
+        '--content-offset',
+        `calc(${progress} * ${sidebarWidth})`
+      );
     };
 
+    document.documentElement.style.setProperty('--content-offset', '0rem');
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.documentElement.style.removeProperty('--content-offset');
+    };
   }, []);
 
   // Close mobile menu when clicking outside
@@ -39,7 +49,7 @@ export default function ContactSidebar() {
           transform: `translateX(${scrollProgress * 100 - 100}%)`,
         }}
       >
-        <div className="h-full bg-white/90 dark:bg-black/80 backdrop-blur-xl border-r border-gray-300 dark:border-white/10 p-8 flex flex-col items-center justify-center gap-12 w-64">
+        <div className="h-full w-[clamp(14rem,20vw,16rem)] bg-white/90 dark:bg-black/80 backdrop-blur-xl border-r border-gray-300 dark:border-white/10 p-8 flex flex-col items-center justify-center gap-12">
           {/* Initials */}
           <div className="w-20 h-20 border border-gray-300 dark:border-white/20 flex items-center justify-center">
             <span className="text-2xl font-light text-gray-900 dark:text-white tracking-widest">DN</span>

@@ -16,7 +16,7 @@ export default function Home() {
       <ThemeToggle />
       
       {/* Main Content */}
-      <div className="relative z-10">
+      <div className="relative z-10 transition-[padding-left] duration-700 ease-out lg:pl-[var(--content-offset,0rem)]">
         <HeroSection />
         <AboutSection />
         <TechStackSection />
