@@ -4,6 +4,13 @@ import { useState } from 'react';
 
 const projects = [
   {
+    id: 8,
+    title: 'Edge IaC Automation Platform',
+    description: 'Infrastructure-as-Code platform that provisions edge VMs and configures BGP automatically using CDKTF, Terraform, and Ansible.',
+    tags: ['Terraform', 'Ansible', 'BGP'],
+    link: '/projects/edge-iac',
+  },
+  {
     id: 7,
     title: 'Portfolio Website',
     description: 'Personal portfolio built with Next.js, featuring WebGL smoke effects, dark/light theme switching, and minimal noir design aesthetic.',
