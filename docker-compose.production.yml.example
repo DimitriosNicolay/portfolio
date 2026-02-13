@@ -4,8 +4,8 @@ services:
     restart: always
     volumes:
       - db-data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    env_file:
+      - .env
     networks:
       - internal
 
@@ -13,7 +13,7 @@ services:
     image: clickhouse/clickhouse-server:24.3.3.102-alpine
     restart: always
     volumes:
-      - event-data:/var/lib/clickhouse
+      -- event-data:/var/lib/clickhouse
       - event-logs:/var/log/clickhouse-server
       - ./clickhouse/clickhouse-config.xml:/etc/clickhouse-server/config.d/logging.xml:ro
       - ./clickhouse/clickhouse-user-config.xml:/etc/clickhouse-server/users.d/logging.xml:ro
@@ -33,12 +33,8 @@ services:
       - plausible_events_db
     ports:
       - "127.0.0.1:8000:8000"
-    environment:
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - TOTP_VAULT_KEY=${TOTP_VAULT_KEY}
-      - BASE_URL=${BASE_URL}
-      - DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD}@plausible_db:5432/plausible_db
-      - CLICKHOUSE_DATABASE_URL=${CLICKHOUSE_DATABASE_URL}
+    env_file:
+      - .env
     networks:
       - internal
 
@@ -47,8 +43,8 @@ services:
     restart: always
     ports:
       - "127.0.0.1:3000:3000"
-    environment:
-      - NODE_ENV=production
+    env_file:
+      - .env
     networks:
       - internal
     healthcheck:
