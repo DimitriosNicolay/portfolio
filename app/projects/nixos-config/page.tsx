@@ -32,10 +32,14 @@ export default function NixOSConfigProject() {
           {/* Project Image Card */}
           <div className="mb-16 border border-gray-300 dark:border-white/10 p-0 overflow-hidden">
             <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-black flex items-center justify-center">
-              <span className="text-gray-400 dark:text-gray-600 text-sm font-light tracking-wide">Project Image</span>
+              <img
+              src="/images/projects/nixos-config/nixos-linux-waves-catpuccin-purple.jpg"
+              alt="NixOS logo"
+              className="block w-full h-auto max-h-[60vh] object-contain bg-gray-100 dark:bg-black"
+            />
             </div>
             <div className="p-6 border-t border-gray-300 dark:border-white/10">
-              <p className="text-sm text-gray-500 dark:text-gray-500 font-light m-0">NixOS Configuration Architecture</p>
+              <p className="text-sm text-gray-500 dark:text-gray-500 font-light m-0">NixOS logo</p>
             </div>
           </div>
 

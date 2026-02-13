@@ -32,10 +32,14 @@ export default function AS204801Project() {
           {/* Project Image Card */}
           <div className="mb-16 border border-gray-300 dark:border-white/10 p-0 overflow-hidden">
             <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-black flex items-center justify-center">
-              <span className="text-gray-400 dark:text-gray-600 text-sm font-light tracking-wide">Project Image</span>
+              <img
+                src="/images/projects/as204801/autonomous-system-diagram.svg"
+                alt="Visualisation of ASNs (autonomous system number)"
+                className="block w-full h-full object-cover bg-gray-100 dark:bg-black"
+              />
             </div>
             <div className="p-6 border-t border-gray-300 dark:border-white/10">
-              <p className="text-sm text-gray-500 dark:text-gray-500 font-light m-0">AS204801 Network Topology</p>
+              <p className="text-sm text-gray-500 dark:text-gray-500 font-light m-0">Visualisation of ASNs (autonomous system number)</p>
             </div>
           </div>
 
