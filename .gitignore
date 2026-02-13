@@ -61,3 +61,6 @@ app/legal-notice/page.tsx
 # test and development files
 test-theme.html
 start.sh
+
+#.env
+!.env.example
