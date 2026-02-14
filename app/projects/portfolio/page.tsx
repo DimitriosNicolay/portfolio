@@ -4,10 +4,10 @@ export default function PortfolioProject() {
       <div className="project-container">
         <div className="project-header">
           <a
-            href="/"
+            href="/#projects"
             className="project-back-link"
           >
-            ← Back to Home
+            ← Back to Projects
           </a>
 
           <h1 className="project-title">
