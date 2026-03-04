@@ -11,7 +11,7 @@ A performant, production-ready portfolio built with Next.js, featuring custom We
 - Animation: Lenis smooth scroll, Framer Motion
 
 **Infrastructure & Deployment**
-- **Proxy/SSL:** Caddy (Automated Let's Encrypt HTTPS)
+- **Proxy/SSL:** Caddy + Cloudflare Origin Certificates (Full Strict Mode)
 - **Containerization:** Docker & Docker Compose
 - **CI/CD:** GitHub Actions
 - **Registry:** GitHub Container Registry (GHCR)
@@ -48,19 +48,28 @@ This project uses a fully automated GitOps pipeline. Merging or pushing to the `
 ### 1. Server Provisioning
 The production environment expects a standard Linux VPS with Docker installed. The stack is deployed to `/opt/stacks/portfolio`.
 
-You must manually create two configuration files on the host before the first deployment:
+You must manually create the directory structure and configuration files on the host before the first deployment. **Do not commit these files to Git.**
+
+```bash
+mkdir -p /opt/stacks/portfolio/certs
+```
+
+**`certs/cert.pem` & `certs/key.pem`**
+Generate an Origin Certificate in your Cloudflare dashboard and save the public and private keys in these files.
 
 **`Caddyfile`** (Reverse Proxy & SSL)
 ```caddyfile
 yourdomain.com {
+    tls /etc/caddy/certs/cert.pem /etc/caddy/certs/key.pem
     reverse_proxy portfolio:3000
 }
 analytics.yourdomain.com {
+    tls /etc/caddy/certs/cert.pem /etc/caddy/certs/key.pem
     reverse_proxy plausible:8000
 }
 ```
 
-**`.env`** (Secrets Management - DO NOT COMMIT)
+**`.env`** (Secrets Management)
 ```env
 # Plausible Analytics Configuration
 BASE_URL=[https://analytics.yourdomain.com](https://analytics.yourdomain.com)
