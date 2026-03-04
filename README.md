@@ -1,180 +1,86 @@
 # Portfolio Website
 
-A modern, performant portfolio website built with Next.js, featuring custom WebGL backgrounds and self-hosted analytics.
+A performant, production-ready portfolio built with Next.js, featuring custom WebGL backgrounds, automated CI/CD, and self-hosted privacy-first analytics.
 
-## Features
+## Architecture & Tech Stack
 
-- **Modern Tech Stack**: Next.js 16, React 19, TypeScript
-- **3D Graphics**: Custom WebGL shaders with Three.js and React Three Fiber
-- **Smooth Animations**: Lenis smooth scrolling and Framer Motion
-- **Dark Mode**: System-aware theme with manual toggle
-- **Privacy-First Analytics**: Self-hosted Plausible Analytics (optional)
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
-- **GDPR Compliant**: Includes privacy policy and legal notice pages for German compliance
+**Frontend & UI**
+- Framework: Next.js 16 (App Router), React 19, TypeScript
+- Styling: Tailwind CSS
+- 3D Graphics: Three.js, React Three Fiber, custom WebGL shaders
+- Animation: Lenis smooth scroll, Framer Motion
 
-## Tech Stack
+**Infrastructure & Deployment**
+- **Proxy/SSL:** Caddy (Automated Let's Encrypt HTTPS)
+- **Containerization:** Docker & Docker Compose
+- **CI/CD:** GitHub Actions
+- **Registry:** GitHub Container Registry (GHCR)
+- **Analytics:** Self-hosted Plausible Analytics (PostgreSQL + ClickHouse)
 
-- **Framework**: Next.js 16 (App Router)
-- **UI Library**: React 19
-- **Styling**: Tailwind CSS
-- **3D Graphics**: Three.js, React Three Fiber, Drei
-- **Icons**: Simple Icons, Font Awesome
-- **Animations**: Lenis smooth scroll
-- **Deployment**: Docker, Docker Compose
-
-## Getting Started
+## Local Development
 
 ### Prerequisites
+- Node.js 20+
+- npm or pnpm
 
-- Node.js 20 or higher
-- npm or yarn
+### Setup
 
-### Installation
+1. Clone and install:
 
-1. Clone the repository:
 ```bash
-git clone https://github.com/DimitriosNicolay/portfolio.git
+git clone [https://github.com/DimitriosNicolay/portfolio.git](https://github.com/DimitriosNicolay/portfolio.git)
 cd portfolio
-```
-
-2. Install dependencies:
-```bash
 npm install
 ```
 
-3. Run the development server:
-```bash
-npm run dev
-```
+2. Run the development server:
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Project Structure
-
-```
-├── app/                      # Next.js app directory
-│   ├── layout.tsx           # Root layout with theme provider
-│   ├── page.tsx             # Home page
-│   ├── privacy-policy/      # Privacy policy page (GDPR)
-│   ├── legal-notice/        # Legal notice page (Impressum)
-│   └── projects/            # Individual project pages
-├── components/              # React components
-│   ├── HeroSection.tsx      # Landing section
-│   ├── AboutSection.tsx     # About information
-│   ├── TechStackSection.tsx # Technology showcase
-│   ├── ProjectsSection.tsx  # Project cards with pagination
-│   ├── ContactSidebar.tsx   # Fixed contact sidebar
-│   ├── Footer.tsx           # Site footer
-│   ├── WebGLBackground.tsx  # Custom shader background
-│   └── ThemeToggle.tsx      # Dark mode toggle
-├── contexts/                # React contexts
-│   └── ThemeContext.tsx     # Theme management
-└── public/                  # Static assets
-```
-
-## Customization
-
-### Personal Information
-
-Update your information in:
-- `components/HeroSection.tsx` - Name, title, description
-- `components/AboutSection.tsx` - Bio and stats
-- `components/Footer.tsx` - Social links and subtitle
-- `app/legal-notice/page.tsx` - Legal information (if needed)
-- `app/privacy-policy/page.tsx` - Privacy policy (if needed)
-
-### Projects
-
-Add or modify projects in `components/ProjectsSection.tsx`. Each project can have a dedicated page in `app/projects/[slug]/page.tsx`.
-
-### Tech Stack
-
-Update technologies in `components/TechStackSection.tsx`. Icons are from Simple Icons library.
-
-### Theme
-
-Customize colors in `app/globals.css` and Tailwind configuration.
-
-## Deployment
-
-### Docker Deployment
-
-1. Build the Docker image:
-```bash
-docker build -t portfolio:latest .
-```
-
-2. Run the container:
-```bash
-docker run -p 3000:3000 portfolio:latest
-```
-
-### Docker Compose with Plausible Analytics
-
-For a complete setup with self-hosted analytics:
-
-1. Copy the example configuration:
-```bash
-cp docker-compose.production.yml.example docker-compose.production.yml
-```
-
-2. Generate secrets:
-```bash
-# SECRET_KEY_BASE (64 chars)
-openssl rand -base64 48
-
-# TOTP_VAULT_KEY (32 bytes = 64 hex chars)
-openssl rand -hex 32
-```
-
-3. Edit `docker-compose.production.yml` and update:
-   - `SECRET_KEY_BASE` with your generated secret
-   - `TOTP_VAULT_KEY` with your generated key
-   - `BASE_URL` with your analytics domain
-
-4. Start all services:
-```bash
-docker compose -f docker-compose.production.yml up -d
-```
-
-The portfolio will be available on port 3000 and Plausible on port 8000.
-
-## Analytics Integration
-
-To enable Plausible Analytics, update `app/layout.tsx` with your analytics script:
-
-```tsx
-<script defer data-domain="yourdomain.com" src="https://analytics.yourdomain.com/js/script.js"></script>
-```
-
-## Legal Compliance
-
-This template includes directories for German legal requirements:
-- `app/privacy-policy/` - For Datenschutzerklärung (Privacy Policy)
-- `app/legal-notice/` - For Impressum (Legal Notice)
-
-See the README files in each directory for implementation guidance.
-
-## Development
-
-```bash
-# Development server
+```Bash
 npm run dev
 
-# Production build
-npm run build
-
-# Start production server
-npm start
-
-# Lint code
-npm run lint
+Access the site at http://localhost:3000.
 ```
+
+## Production Deployment
+
+This project uses a fully automated GitOps pipeline. Merging or pushing to the `main` branch automatically triggers a build and deploys the updated Docker image to the production VPS via SSH.
+
+### 1. Server Provisioning
+The production environment expects a standard Linux VPS with Docker installed. The stack is deployed to `/opt/stacks/portfolio`.
+
+You must manually create two configuration files on the host before the first deployment:
+
+**`Caddyfile`** (Reverse Proxy & SSL)
+```caddyfile
+yourdomain.com {
+    reverse_proxy portfolio:3000
+}
+analytics.yourdomain.com {
+    reverse_proxy plausible:8000
+}
+```
+
+**`.env`** (Secrets Management - DO NOT COMMIT)
+```env
+# Plausible Analytics Configuration
+BASE_URL=[https://analytics.yourdomain.com](https://analytics.yourdomain.com)
+SECRET_KEY_BASE=<generate_with_openssl_rand_base64_48>
+TOTP_VAULT_KEY=<generate_with_openssl_rand_hex_32>
+POSTGRES_PASSWORD=<secure_db_password>
+```
+
+### 2. CI/CD Pipeline (GitHub Actions)
+The workflow located in `.github/workflows/deploy.yml` handles the automated rollout:
+1. Builds the Next.js application into an optimized Docker image.
+2. Pushes the image to GHCR (`ghcr.io/dimitriosnicolay/portfolio`).
+3. Authenticates with the production VPS via SSH.
+4. Pulls the latest image and executes a zero-downtime container recreation using `docker compose`.
+5. Prunes dangling images to manage host disk space.
+
+Required GitHub Repository Secrets:
+- `VPS_HOST`: Server IP address
+- `VPS_USER`: Deployment user (e.g., `deploy`)
+- `VPS_SSH_KEY`: ED25519 private key authorized on the VPS
 
 ## License
-
-This project is open source and available under the MIT License.
-
-## Contact
-
-For questions or feedback, feel free to reach out through the contact information on the website.
+MIT
