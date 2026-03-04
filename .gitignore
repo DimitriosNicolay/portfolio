@@ -64,3 +64,6 @@ start.sh
 
 #.env
 !.env.example
+
+# Cloudflare Origin Certificates
+certs/
