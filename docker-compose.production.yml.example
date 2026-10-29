@@ -4,8 +4,8 @@ services:
     restart: always
     volumes:
       - db-data:/var/lib/postgresql/data
-    env_file:
-      - .env
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set the existing database password in .env}
     networks:
       - internal
 
@@ -32,7 +32,7 @@ services:
       - plausible_db
       - plausible_events_db
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     env_file:
       - .env
     networks:
@@ -42,11 +42,15 @@ services:
     build: .
     restart: always
     ports:
-      - "3000:3000"
-    env_file:
-      - .env
+      - "127.0.0.1:3000:3000"
+    environment:
+      NODE_ENV: production
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
     networks:
-      - internal
+      - website
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3000"]
       interval: 30s
@@ -56,6 +60,8 @@ services:
 
 networks:
   internal:
+    driver: bridge
+  website:
     driver: bridge
 
 volumes:

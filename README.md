@@ -54,6 +54,21 @@ docker compose -f docker-compose.production.yml logs --tail=100 plausible plausi
 
 Review logs locally for secrets before sharing. Check Caddy separately in its actual stack. The proxy and `plausible` must share a Docker network if the proxy uses `reverse_proxy plausible:8000`. A proxy running on the host instead needs the published loopback port. Verify the actual arrangement before changing it.
 
+The hardened template publishes both services on host loopback only. The
+portfolio has its own `website` network and receives no `.env` secrets;
+PostgreSQL receives only `POSTGRES_PASSWORD`. The network named `internal` is
+a regular bridge, not Docker's `internal: true` isolation mode. Plausible needs
+outbound access for features such as email.
+
+Before adopting this template on an existing VPS, inspect Caddy's networks and
+upstreams. Host Caddy can use `127.0.0.1:3000` and `127.0.0.1:8000`. Container
+Caddy must join the website network for `portfolio:3000` and the backend network
+for `plausible:8000`; its own container loopback cannot reach the host services.
+Use the actual Compose network names (normally `portfolio_website` and
+`portfolio_internal`). Do not replace the live stack without preserving its
+volumes, project name, credentials and proxy configuration. Website releases
+do not copy this template or apply backend/network maintenance automatically.
+
 Check the script returns JavaScript and health returns success, then check the browser's script and event requests. To verify ingestion, use a separate Plausible test site/domain and confirm an event in that site's dashboard. An HTTP success from the event endpoint alone does not prove ingestion or reporting.
 
 ## Deployment configuration
@@ -103,6 +118,38 @@ Website releases recreate only the `portfolio` service. Backend maintenance is
 handled separately. Transferring `.env` does not update already running backend
 containers or rotate credentials stored inside a database. Apply backend
 configuration changes through a coordinated maintenance operation.
+
+## Security maintenance
+
+All routes receive MIME sniffing protection, a referrer policy, disabled unused
+browser permissions and anti-framing headers. The enforced CSP blocks object
+embeds, form submissions and foreign base URLs. A separate production-only
+report-only CSP observes resource loading without blocking scripts or styles.
+It intentionally reports the existing inline theme and Next.js hydration
+scripts. Inspect `securitypolicyviolation` events or browser console messages;
+there is no remote reporting endpoint or persistent report collection.
+
+Do not promote the full report-only policy unchanged: it would block hydration
+and theme initialization. First choose and verify a hash strategy compatible
+with static pages, or explicitly accept dynamic rendering for per-response
+nonces. Check both languages, theme switching, client navigation, WebGL and
+Plausible using isolated analytics requests. The current report-only script
+policy is monitoring, not enforced XSS protection.
+
+HSTS belongs at the public HTTPS proxy here. Verify HTTP-to-HTTPS redirects and
+certificate renewal, then start with a short `Strict-Transport-Security`
+`max-age` before increasing it. Add `includeSubDomains` or preload only after
+checking every affected subdomain. This repository does not change the live
+Caddy or Cloudflare configuration.
+
+Dependabot proposes weekly npm, Dockerfile and GitHub Actions updates after
+`.github/dependabot.yml` reaches the default branch. Actions are pinned to
+verified upstream commit SHAs. Review and validate update PRs before merging;
+merging to `main` triggers the existing production deployment workflow. Enable
+Dependabot alerts and security updates in GitHub's repository settings as well.
+Backend images in the `.yml.example` template require separate review; the
+Dockerfile updater does not establish that Plausible, PostgreSQL or ClickHouse
+are current. Back up their data and verify restoration before backend upgrades.
 
 ## Languages
 
