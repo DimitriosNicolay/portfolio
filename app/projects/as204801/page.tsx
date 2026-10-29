@@ -1,14 +1,15 @@
+import Link from "next/link";
+
 export default function AS204801Project() {
   return (
     <main className="project-main">
       <div className="project-container">
         <div className="project-header">
-          <a
-            href="/#projects"
+          <Link href="/#projects"
             className="project-back-link"
           >
             ← Back to Projects
-          </a>
+          </Link>
 
           <h1 className="project-title">
             AS204801 Network

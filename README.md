@@ -1,63 +1,61 @@
 # Portfolio Website
 
-A performant, production-ready portfolio built with Next.js, featuring custom WebGL backgrounds, automated CI/CD, and self-hosted privacy-first analytics.
+Personal portfolio for dnicolay.de, built with Next.js 16, React 19, TypeScript and Tailwind CSS. Project pages live in `app/projects/<slug>/page.tsx` and use the shared `project-*` classes in `app/globals.css`.
 
-## Architecture & Tech Stack
+## Local development
 
-**Frontend & UI**
-- Framework: Next.js 16 (App Router), React 19, TypeScript
-- Styling: Tailwind CSS
-- 3D Graphics: Three.js, React Three Fiber, custom WebGL shaders
-- Animation: Lenis smooth scroll, Framer Motion
-
-**Infrastructure & Deployment**
-- **Proxy/SSL:** Caddy + Cloudflare Origin Certificates (Full Strict Mode)
-- **Containerization:** Docker & Docker Compose
-- **CI/CD:** GitHub Actions
-- **Registry:** GitHub Container Registry (GHCR)
-- **Analytics:** Self-hosted Plausible Analytics (PostgreSQL + ClickHouse)
-
-## Local Development
-
-### Prerequisites
-- Node.js 20+
-- npm or pnpm
-
-### Setup
-
-1. Clone and install:
+Use Node.js 20.9 or newer and npm.
 
 ```bash
-git clone [https://github.com/DimitriosNicolay/portfolio.git](https://github.com/DimitriosNicolay/portfolio.git)
+git clone https://github.com/DimitriosNicolay/portfolio.git
 cd portfolio
-npm install
-```
-
-2. Run the development server:
-
-```Bash
+npm ci
 npm run dev
-
-Access the site at http://localhost:3000.
 ```
 
-## Production Deployment
-
-This project uses a fully automated GitOps pipeline. Merging or pushing to the `main` branch automatically triggers a build and deploys the updated Docker image to the production VPS via SSH.
-
-### 1. Server Provisioning
-The production environment expects a standard Linux VPS with Docker installed. The stack is deployed to `/opt/stacks/portfolio`.
-
-You must manually create the directory structure and configuration files on the host before the first deployment. **Do not commit these files to Git.**
+Open http://localhost:3000. The development server does not load analytics.
 
 ```bash
-mkdir -p /opt/stacks/portfolio/certs
+npm run lint
+npx tsc --noEmit
+npm run build
+npm start
 ```
 
-**`certs/cert.pem` & `certs/key.pem`**
-Generate an Origin Certificate in your Cloudflare dashboard and save the public and private keys in these files.
+The UI uses Arial/system fonts. No Google Fonts download is needed during the build or in the visitor's browser. Three.js supplies the WebGL background, and Lenis supplies smooth scrolling. Tailwind and PostCSS each have one configuration file.
 
-**`Caddyfile`** (Reverse Proxy & SSL)
+## Analytics
+
+The root layout loads the self-hosted Plausible CE tracker through `next/script` after hydration in production builds. The existing installation uses `https://analytics.dnicolay.de/js/script.js` with `data-domain="dnicolay.de"`. Its event endpoint is `/api/event` on the same analytics origin. The deployed tracker handles history navigation itself; adding a second route listener would risk duplicate pageviews.
+
+There is no consent banner or consent state in the existing implementation. This change preserves the existing cookieless tracker and its `plausible_ignore` opt-out. It adds no visitor identifier, custom event, cookie or first-party proxy. The privacy policy lives at `/privacy-policy`; technical checks do not establish legal compliance.
+
+The tracker ignores localhost. For local production-browser QA, intercept **both** the script and event endpoint and use an isolated test hostname; never redirect synthetic events to the production collector.
+
+### Diagnose a failed production collector
+
+The production stack runs on a VPS behind Cloudflare, with Caddy routing to the website and analytics containers. `docker-compose.production.yml.example` is a template; the actual Compose file, `.env`, certificates and Caddy configuration are managed on the server.
+
+Start with read-only checks on the VPS, using the actual service names:
+
+```bash
+docker compose -f docker-compose.production.yml config --quiet
+docker compose -f docker-compose.production.yml ps
+docker compose -f docker-compose.production.yml logs --tail=100 plausible plausible_db plausible_events_db
+```
+
+Review logs locally for secrets before sharing. Check Caddy separately in its actual stack. The proxy and `plausible` must share a Docker network if the proxy uses `reverse_proxy plausible:8000`. A proxy running on the host instead needs the published loopback port. Verify the actual arrangement before changing it.
+
+Check the script returns JavaScript and health returns success, then check the browser's script and event requests. To verify ingestion, use a separate Plausible test site/domain and confirm an event in that site's dashboard. An HTTP success from the event endpoint alone does not prove ingestion or reporting.
+
+## Deployment configuration
+
+The repository defines a stack with Docker Compose, Caddy, PostgreSQL and ClickHouse. The workflow in `.github/workflows/deploy.yml` first calls the shared checks, builds a container, publishes `latest` and a commit tag to GHCR and updates the VPS stack over SSH. Deployment uses the commit tag `sha-<commit>` rather than `latest`. Pull requests run `.github/workflows/checks.yml`. Docker and CI install from the tracked lockfile with `npm ci`. A push to `main` triggers deployment. Local editing does not authorize a push, merge or deployment.
+
+The SSH workflow uses production files in `/opt/stacks/portfolio`. Keep secrets and certificates out of the repository. For a new deployment, copy `.env.example` to the host and replace all placeholders, including matching PostgreSQL credentials in `POSTGRES_PASSWORD` and `DATABASE_URL`. Changing an environment file does not change credentials already stored in an existing database. The ClickHouse XML files referenced by the template must also exist on the host; they are ignored by Git.
+
+Example Caddy routing, assuming Caddy shares the application's Docker network:
+
 ```caddyfile
 yourdomain.com {
     tls /etc/caddy/certs/cert.pem /etc/caddy/certs/key.pem
@@ -69,27 +67,39 @@ analytics.yourdomain.com {
 }
 ```
 
-**`.env`** (Secrets Management)
-```env
-# Plausible Analytics Configuration
-BASE_URL=[https://analytics.yourdomain.com](https://analytics.yourdomain.com)
-SECRET_KEY_BASE=<generate_with_openssl_rand_base64_48>
-TOTP_VAULT_KEY=<generate_with_openssl_rand_hex_32>
-POSTGRES_PASSWORD=<secure_db_password>
-```
+Set `BASE_URL=https://analytics.yourdomain.com` as a plain URL, without Markdown link syntax. Do not rotate existing keys as part of routine troubleshooting. The single-container Compose recreation in this workflow can interrupt service; it does not establish zero-downtime deployment.
 
-### 2. CI/CD Pipeline (GitHub Actions)
-The workflow located in `.github/workflows/deploy.yml` handles the automated rollout:
-1. Builds the Next.js application into an optimized Docker image.
-2. Pushes the image to GHCR (`ghcr.io/dimitriosnicolay/portfolio`).
-3. Authenticates with the production VPS via SSH.
-4. Pulls the latest image and executes a zero-downtime container recreation using `docker compose`.
-5. Prunes dangling images to manage host disk space.
+Configure these GitHub Actions repository secrets before deploying:
 
-Required GitHub Repository Secrets:
-- `VPS_HOST`: Server IP address
-- `VPS_USER`: Deployment user (e.g., `deploy`)
-- `VPS_SSH_KEY`: ED25519 private key authorized on the VPS
+| Secret | Value |
+| --- | --- |
+| `VPS_HOST` | Server IP or hostname, without a URL scheme |
+| `VPS_USER` | Deployment account with access to the stack directory and Docker |
+| `VPS_SSH_KEY` | Dedicated, unencrypted OpenSSH private deployment key |
+| `VPS_KNOWN_HOSTS` | Trusted OpenSSH known-hosts line for that exact host |
+| `PORTFOLIO_RUNTIME_ENV` | Complete current server `.env`, preserving existing database credentials and signing keys |
+
+GitHub supplies `GITHUB_TOKEN` automatically for GHCR; do not create a separate
+secret with that name. Obtain the host key through an existing trusted server
+session, rather than trusting a fresh network scan without verification.
+
+The deployment scripts transfer configuration through encrypted SSH standard
+input, validate it before installation and replace `.env` atomically with mode
+0600. The previous environment is retained privately as `.env.previous`.
+Registry credentials are temporary. A failed website start or health check
+triggers restoration of the previous environment and exact previous image.
+The workflow requires all five secrets; its first real deployment has not yet
+been run as part of the local preparation.
+
+Website releases recreate only the `portfolio` service. Backend maintenance is
+handled separately. Transferring `.env` does not update already running backend
+containers or rotate credentials stored inside a database. Apply backend
+configuration changes through a coordinated maintenance operation.
+
+## Project articles
+
+Keep the current TSX page format, shared styling and image directory convention. The Artifact Gateway example is at `/projects/artifact-gateway`. New article files are local drafts until reviewed; publishing requires explicit approval.
 
 ## License
+
 MIT

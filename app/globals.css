@@ -21,7 +21,8 @@
   }
 
   .project-title {
-    @apply text-5xl font-light tracking-wide mb-6;
+    @apply text-3xl sm:text-4xl md:text-5xl font-light tracking-wide mb-6;
+    overflow-wrap: anywhere;
   }
 
   .project-tags {
@@ -38,6 +39,7 @@
 
   .project-article {
     @apply prose prose-lg dark:prose-invert max-w-none;
+    overflow-wrap: anywhere;
   }
 
   /* Project card */
@@ -171,4 +173,8 @@ html {
   transition-property: background-color, border-color, color, fill, stroke;
   transition-duration: 200ms;
   transition-timing-function: ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }

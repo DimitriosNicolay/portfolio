@@ -15,7 +15,7 @@ export default function ContactSidebar() {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = Math.min(scrollTop / (docHeight * 0.3), 1);
+      const progress = docHeight > 0 ? Math.min(scrollTop / (docHeight * 0.3), 1) : 0;
       setScrollProgress(progress);
       document.documentElement.style.setProperty(
         '--content-offset',
@@ -38,6 +38,7 @@ export default function ContactSidebar() {
     } else {
       document.body.style.overflow = 'unset';
     }
+    return () => { document.body.style.overflow = ''; };
   }, [isMobileMenuOpen]);
 
   return (

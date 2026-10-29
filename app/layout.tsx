@@ -1,19 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import SmoothScroll from "@/components/SmoothScroll";
 import WebGLBackground from "@/components/WebGLBackground";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Dimitrios Nicolay",
@@ -32,21 +22,22 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                const theme = localStorage.getItem('theme') || 'dark';
+                const theme = localStorage.getItem('theme') === 'light' ? 'light' : 'dark';
                 document.documentElement.classList.add(theme);
-              } catch (e) {}
+              } catch { document.documentElement.classList.add('dark'); }
             `,
           }}
         />
-        <script
-          defer
-          data-domain="dnicolay.de"
-          src="https://analytics.dnicolay.de/js/script.js"
-        />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
+        {process.env.NODE_ENV === 'production' && (
+          <Script
+            id="plausible-analytics"
+            strategy="afterInteractive"
+            data-domain="dnicolay.de"
+            src="https://analytics.dnicolay.de/js/script.js"
+          />
+        )}
         <ThemeProvider>
           <WebGLBackground />
           <SmoothScroll>

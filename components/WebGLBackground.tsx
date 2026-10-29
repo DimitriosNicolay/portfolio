@@ -9,11 +9,11 @@ function SubtleTexture() {
   const meshRef = useRef<THREE.Mesh>(null);
   const { theme } = useTheme();
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
-  const uniformsRef = useRef({
+  const [uniforms] = useState(() => ({
     uTime: { value: 0 },
     uTheme: { value: theme === 'dark' ? 1.0 : 0.0 },
     uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-  });
+  }));
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -159,7 +159,7 @@ function SubtleTexture() {
     <mesh ref={meshRef} scale={[10, 10, 1]}>
       <planeGeometry args={[2, 2, 16, 16]} />
       <shaderMaterial
-        uniforms={uniformsRef.current}
+        uniforms={uniforms}
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
       />

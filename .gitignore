@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.pnp
@@ -35,8 +33,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -53,6 +52,8 @@ clickhouse/
 DEPLOYMENT.md
 PORTFOLIO_README.md
 SETUP_GUIDE.md
+SKILL.md
+/docs/
 
 # legal pages (contain personal information)
 app/privacy-policy/page.tsx
@@ -62,8 +63,18 @@ app/legal-notice/page.tsx
 test-theme.html
 start.sh
 
-#.env
-!.env.example
-
 # Cloudflare Origin Certificates
 certs/
+
+# Local agent configuration and skills
+/skills/
+/.agents/
+/.codex/
+/.github/skills/
+
+# Python deployment tooling
+__pycache__/
+*.py[cod]
+
+# Reproducible application and container builds
+!/package-lock.json

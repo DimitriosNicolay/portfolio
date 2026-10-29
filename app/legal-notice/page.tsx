@@ -1,14 +1,15 @@
+import Link from "next/link";
+
 export default function LegalNoticePage() {
   return (
     <div className="min-h-screen px-8 py-24">
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <a
-            href="/"
+          <Link href="/"
             className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
           >
             ← Back to Home
-          </a>
+          </Link>
         </div>
 
         <div className="prose prose-gray dark:prose-invert max-w-none">

@@ -1,14 +1,15 @@
+import Link from "next/link";
+
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen px-8 py-24">
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <a
-            href="/"
+          <Link href="/"
             className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
           >
             ← Back to Home
-          </a>
+          </Link>
         </div>
 
         <div className="prose prose-gray dark:prose-invert max-w-none">
@@ -25,7 +26,7 @@ export default function PrivacyPolicyPage() {
               <h3 className="text-xl font-light mt-8 mb-4">Data Collection on This Website</h3>
               <h4 className="text-lg font-light mt-6 mb-3">Who is responsible for data collection on this website?</h4>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                Data processing on this website is carried out by the website operator. You can find their contact details in the "Information on the Responsible Party" section of this privacy policy.
+                Data processing on this website is carried out by the website operator. You can find their contact details in the &quot;Information on the Responsible Party&quot; section of this privacy policy.
               </p>
 
               <h4 className="text-lg font-light mt-6 mb-3">How do we collect your data?</h4>
@@ -69,7 +70,7 @@ export default function PrivacyPolicyPage() {
                 The provider is Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen, Germany (hereinafter referred to as Hetzner).
               </p>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                For details, please refer to Hetzner's privacy policy:{' '}
+                For details, please refer to Hetzner&apos;s privacy policy:{' '}
                 <a
                   href="https://www.hetzner.com/legal/privacy-policy/"
                   target="_blank"
@@ -81,7 +82,7 @@ export default function PrivacyPolicyPage() {
                 .
               </p>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                The use of Hetzner is based on Art. 6 (1) lit. f GDPR. We have a legitimate interest in ensuring the most reliable presentation of our website. If appropriate consent has been requested, processing is carried out exclusively on the basis of Art. 6 (1) lit. a GDPR and § 25 (1) TDDDG, insofar as consent includes the storage of cookies or access to information in the user's device (e.g., device fingerprinting) within the meaning of the TDDDG. Consent can be revoked at any time.
+                The use of Hetzner is based on Art. 6 (1) lit. f GDPR. We have a legitimate interest in ensuring the most reliable presentation of our website. If appropriate consent has been requested, processing is carried out exclusively on the basis of Art. 6 (1) lit. a GDPR and § 25 (1) TDDDG, insofar as consent includes the storage of cookies or access to information in the user&apos;s device (e.g., device fingerprinting) within the meaning of the TDDDG. Consent can be revoked at any time.
               </p>
             </section>
 
@@ -176,7 +177,7 @@ export default function PrivacyPolicyPage() {
 
               <h3 className="text-xl font-light mt-8 mb-4">SSL/TLS Encryption</h3>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                For security reasons and to protect the transmission of confidential content, such as orders or inquiries that you send to us as the site operator, this site uses SSL or TLS encryption. You can recognize an encrypted connection by the fact that the address line of the browser changes from "http://" to "https://" and by the lock symbol in your browser line.
+                For security reasons and to protect the transmission of confidential content, such as orders or inquiries that you send to us as the site operator, this site uses SSL or TLS encryption. You can recognize an encrypted connection by the fact that the address line of the browser changes from &quot;http://&quot; to &quot;https://&quot; and by the lock symbol in your browser line.
               </p>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                 When SSL or TLS encryption is activated, the data you transmit to us cannot be read by third parties.
@@ -215,7 +216,7 @@ export default function PrivacyPolicyPage() {
                 >
                   https://developers.google.com/fonts/faq
                 </a>
-                {' '}and Google's privacy policy:{' '}
+                {' '}and Google&apos;s privacy policy:{' '}
                 <a
                   href="https://policies.google.com/privacy"
                   target="_blank"
@@ -269,7 +270,7 @@ export default function PrivacyPolicyPage() {
                 Data processing is based on Art. 6 (1) lit. f GDPR (legitimate interest in analyzing user behavior to optimize the website).
               </p>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                For more information, see Plausible's privacy policy:{' '}
+                For more information, see Plausible&apos;s privacy policy:{' '}
                 <a
                   href="https://plausible.io/data-policy"
                   target="_blank"

@@ -3,6 +3,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/link';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -33,11 +34,11 @@ export default function Footer() {
               Links
             </h3>
             <div className="grid grid-cols-2 gap-x-8 gap-y-2">
-              <FooterLink href="#about">About</FooterLink>
+              <FooterLink href="/#about">About</FooterLink>
               <FooterLink href="/legal-notice">Legal Notice</FooterLink>
-              <FooterLink href="#tech">Tech Stack</FooterLink>
+              <FooterLink href="/#tech">Tech Stack</FooterLink>
               <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
-              <FooterLink href="#projects">Projects</FooterLink>
+              <FooterLink href="/#projects">Projects</FooterLink>
             </div>
           </div>
 
@@ -57,7 +58,7 @@ export default function Footer() {
                 <FontAwesomeIcon icon={faGithub} className="text-gray-600 dark:text-gray-400" />
               </a>
               <a
-                href="https://www.linkedin.com/in/dimitrios-nicolay"
+                href="https://www.linkedin.com/in/dimitrios-nicolay-29a58530a/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 border border-gray-300 dark:border-white/20 flex items-center justify-center hover:border-gray-500 dark:hover:border-white/40 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
@@ -89,11 +90,11 @@ export default function Footer() {
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <a
+    <Link
       href={href}
       className="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors duration-300 font-light block"
     >
       {children}
-    </a>
+    </Link>
   );
 }

@@ -1,8 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 const projects = [
+  {
+    id: 9,
+    title: 'Artifact Gateway',
+    description: 'Ein AWS-Lernprojekt mit CDK: Uploads in S3 prüfen, Ergebnisse in DynamoDB speichern und Fehlerpfade nachvollziehen.',
+    tags: ['AWS CDK', 'Lambda', 'TypeScript'],
+    link: '/projects/artifact-gateway',
+  },
   {
     id: 8,
     title: 'Edge IaC Automation Platform',
@@ -150,7 +158,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
         </div>
 
         <div className="pt-4">
-          <a
+          <Link
             href={project.link}
             className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 font-light hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
           >
@@ -158,7 +166,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
             <span className="group-hover:translate-x-1 transition-transform duration-300">
               →
             </span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

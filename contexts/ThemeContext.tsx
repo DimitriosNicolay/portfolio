@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useSyncExternalStore } from 'react';
 
 type Theme = 'dark' | 'light';
 
@@ -11,32 +11,40 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function applyTheme(theme: Theme) {
+  document.documentElement.classList.remove('light', 'dark');
+  document.documentElement.classList.add(theme);
+}
+
+function subscribe(onChange: () => void) {
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === 'theme' || event.key === null) {
+      applyTheme(event.newValue === 'light' ? 'light' : 'dark');
+      onChange();
+    }
+  };
+  window.addEventListener('storage', onStorage);
+  window.addEventListener('theme-change', onChange);
+  return () => {
+    window.removeEventListener('storage', onStorage);
+    window.removeEventListener('theme-change', onChange);
+  };
+}
+
+function getSnapshot(): Theme {
+  return document.documentElement.classList.contains('light') ? 'light' : 'dark';
+}
+
+function getServerSnapshot(): Theme { return 'dark'; }
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark');
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
-
-  useEffect(() => {
-    if (mounted) {
-      document.documentElement.classList.remove('light', 'dark');
-      document.documentElement.classList.add(theme);
-      localStorage.setItem('theme', theme);
-    }
-  }, [theme, mounted]);
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    console.log('Toggling theme from', theme, 'to', newTheme);
-    setTheme(newTheme);
+    const newTheme = getSnapshot() === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
+    try { localStorage.setItem('theme', newTheme); } catch { /* Theme still works without storage. */ }
+    window.dispatchEvent(new Event('theme-change'));
   };
 
   return (

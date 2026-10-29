@@ -1,14 +1,15 @@
+import Link from "next/link";
+
 export default function PortfolioProject() {
   return (
     <main className="project-main">
       <div className="project-container">
         <div className="project-header">
-          <a
-            href="/#projects"
+          <Link href="/#projects"
             className="project-back-link"
           >
             ← Back to Projects
-          </a>
+          </Link>
 
           <h1 className="project-title">
             Portfolio Website
@@ -64,7 +65,7 @@ export default function PortfolioProject() {
               <li>Smooth dark/light theme switching with localStorage persistence</li>
               <li>Responsive design optimized for all screen sizes</li>
               <li>Privacy-first analytics with Plausible (no cookies)</li>
-              <li>GDPR-compliant with proper Datenschutzerklärung and Impressum</li>
+              <li>Dedicated privacy policy and legal notice pages</li>
               <li>Self-hosted fonts (Google Fonts via Next.js)</li>
               <li>Minimal, elegant noir aesthetic with careful typography</li>
               <li>Project pagination system for scalable portfolio growth</li>
@@ -79,17 +80,17 @@ export default function PortfolioProject() {
               <li><strong>Graphics:</strong> Three.js (@react-three/fiber), GLSL shaders</li>
               <li><strong>Icons:</strong> Simple Icons (tech stack), Font Awesome (social links)</li>
               <li><strong>Analytics:</strong> Plausible Analytics (privacy-friendly)</li>
-              <li><strong>Hosting:</strong> Configured for Hetzner deployment</li>
+              <li><strong>Hosting:</strong> Docker deployment on a VPS</li>
             </ul>
           </section>
 
           <section>
             <h2 className="project-heading">Development Highlights</h2>
             <p className="project-text">
-              The project emphasized performance optimization and user experience. WebGL uniforms use React useRef to prevent shader recreation on theme changes, ensuring smooth transitions. The smoke effect underwent multiple iterations to achieve the desired "noir" aesthetic with fine, flowing lines rather than dense clouds. All external resources are self-hosted to maintain privacy and reduce external dependencies.
+              The project emphasized performance optimization and user experience. WebGL uniforms use React useRef to prevent shader recreation on theme changes, ensuring smooth transitions. The smoke effect underwent multiple iterations to achieve the desired &quot;noir&quot; aesthetic with fine, flowing lines rather than dense clouds. All external resources are self-hosted to maintain privacy and reduce external dependencies.
             </p>
             <p className="project-text mt-4">
-              Special attention was paid to GDPR compliance, implementing a comprehensive privacy policy and ensuring no tracking occurs without user awareness. The site uses localStorage only for theme preferences and Plausible Analytics for aggregated, anonymous statistics without cookies.
+              Special attention was paid to GDPR compliance, documenting the analytics integration in a dedicated privacy policy. The site uses localStorage only for theme preferences and Plausible Analytics for aggregated, anonymous statistics without cookies.
             </p>
           </section>
         </article>

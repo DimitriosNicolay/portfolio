@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1320" viewBox="0 0 800 1320" role="img" aria-labelledby="title desc">
+  <title id="title">Freigabe und Ablehnung im Validator</title>
+  <desc id="desc">Nach dem Lesen werden Pflichtfelder und Prüfsumme geprüft. Stimmen beide, schreibt der Handler approved und behält die Dateien. Bei ungültigen Pflichtfeldern oder einer falschen Prüfsumme schreibt er zuerst rejected, löscht danach Manifest und Payload und wirft anschließend einen Fehler. Lese- und JSON-Fehler sind in diesem Ablauf nicht abgefangen.</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 10 5 0 10" fill="none" stroke="#555" stroke-width="1.5"/></marker></defs>
+  <rect width="800" height="1320" fill="#fafafa"/>
+  <style>text{font-family:Arial,sans-serif;fill:#171717;text-anchor:middle}.title{font-size:38px}.label{font-size:33px;fill:#454545}.small{font-size:29px;fill:#555}.node{fill:white;stroke:#888;stroke-width:2}.line{fill:none;stroke:#555;stroke-width:3;marker-end:url(#arrow)}</style>
+  <text x="400" y="65" class="title">Ein Record · zwei Ergebnisse</text>
+  <rect x="125" y="105" width="600" height="140" rx="8" class="node"/>
+  <text x="425" y="165" class="title">Manifest lesen und parsen</text><text x="425" y="213" class="label">danach Pflichtfelder prüfen</text>
+  <path d="M425 245V322" class="line"/>
+  <rect x="125" y="335" width="600" height="190" rx="8" class="node"/>
+  <text x="425" y="392" class="title">Pflichtfelder gültig?</text><text x="425" y="439" class="label">Dann Payload laden:</text><text x="425" y="485" class="label">Stimmt die SHA-256-Prüfsumme?</text>
+  <path d="M425 525V617" class="line"/><text x="480" y="581" class="label">Ja</text>
+  <rect x="125" y="630" width="600" height="190" rx="8" class="node"/>
+  <text x="425" y="687" class="title">approved</text><text x="425" y="735" class="label">Metadaten + Ergebnis speichern</text><text x="425" y="782" class="label">beide Dateien behalten</text>
+  <path d="M125 430H55V1000H112" class="line"/>
+  <text x="86" y="700" class="label" transform="rotate(-90 86 700)">Nein · Pflichtfeld oder Prüfsumme</text>
+  <rect x="125" y="900" width="600" height="255" rx="8" class="node"/>
+  <text x="425" y="958" class="title">rejected</text><text x="425" y="1006" class="label">1. Ergebnis mit Grund speichern</text><text x="425" y="1053" class="label">2. Manifest und Payload löschen</text><text x="425" y="1100" class="label">3. Fehler werfen</text>
+  <text x="400" y="1220" class="small">Offen: Lese-/JSON-Fehler, mehrere Records,</text><text x="400" y="1265" class="small">Duplikate und unterbrochene Löschungen</text>
+</svg>

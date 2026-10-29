@@ -16,14 +16,14 @@ export default function AboutSection() {
           {/* Content */}
           <div className="space-y-8 text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed font-light">
             <p>
-              I'm an IT specialist for system integration with a focus on infrastructure automation and building reliable, scalable systems.
-              My day-to-day work revolves around containerization, Infrastructure as Code, and keeping deployment pipelines clean and predictable.
+              I&apos;m a trained IT specialist for system integration, starting my career with a focus on Linux, infrastructure, and DevOps.
+              In my projects, I work with containers, Infrastructure as Code, and deployment pipelines.
             </p>
             <p>
-              Right now I'm using NixOS to keep configurations reproducible across machines, running and refining a homelab, and contributing to GL-IX to help improve regional connectivity in central Europe.
+              Right now I&apos;m using NixOS to keep configurations reproducible across machines, running and refining a homelab, and contributing to GL-IX to help improve regional connectivity in central Europe.
             </p>
             <p>
-              When I'm not automating infrastructure, I'm digging deeper into Kubernetes, monitoring and observability, and modern web stacks with TypeScript and Next.js.
+              When I&apos;m not automating infrastructure, I&apos;m digging deeper into Kubernetes, monitoring and observability, and modern web stacks with TypeScript and Next.js.
               I like understanding how all the layers—from the hardware up to the frontend—fit together and how to make them easier to operate.
             </p>
           </div>
