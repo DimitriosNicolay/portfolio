@@ -1,3 +1,4 @@
+import CodeBlock from '@/components/CodeBlock';
 import { getContentTranslator } from '@/content/translate';
 import { localizedPath, type Locale } from '@/lib/i18n/routing';
 import Image from 'next/image';
@@ -45,10 +46,10 @@ export default function ArtifactGatewayProject({ locale = "en" }: { locale?: Loc
           <section className="project-section" aria-labelledby="validation">
             <h2 id="validation" className="project-heading">{t("A checksum answers one question")}</h2>
             <p className="project-text">{t("The handler first checks whether")}{' '}<code>version</code>, <code>commitSha</code>, <code>checksum</code>{' '}{t("and")}{' '}<code>buildTimestamp</code>{' '}{t("are strings. It then reads the payload as bytes, calculates its SHA-256 hash and compares the two values. This is the central part of the check:")}</p>
-            <pre><code>{`const calculatedChecksum = createHash("sha256")
+            <CodeBlock language="typescript">{`const calculatedChecksum = createHash("sha256")
   .update(payloadBytes ?? new Uint8Array())
   .digest("hex");
-const isChecksumValid = calculatedChecksum === manifest.checksum;`}</code></pre>
+const isChecksumValid = calculatedChecksum === manifest.checksum;`}</CodeBlock>
             <p className="project-text">{t("Do these bytes match the checksum in the manifest? That is the question this code can answer. It cannot tell me who produced the file. Someone able to replace both files could also supply a matching checksum. Checking the origin would need something more, such as a trusted signature.")}</p>
             <p className="project-text">{t("The metadata check is small, too. A string passes even if it is empty, the commit ID has an unexpected format, or the timestamp is meaningless. Stronger validation is still on the list.")}</p>
           </section>
@@ -71,9 +72,9 @@ const isChecksumValid = calculatedChecksum === manifest.checksum;`}</code></pre>
           <section className="project-section" aria-labelledby="tests">
             <h2 id="tests" className="project-heading">{t("What the tests tell me so far")}</h2>
             <p className="project-text">{t("The project has eight tests. Five check the generated infrastructure template, including the registry key, alarm settings, Lambda runtime and table reference. The other three call the handler with mocked AWS SDK requests: a valid artifact, a wrong checksum, and a manifest missing")}{' '}<code>commitSha</code>{t(". They check the registry writes and the expected S3 delete requests.")}</p>
-            <pre><code>{`npm run build
-npm test -- --runInBand`}</code></pre>
-            <p className="project-text">{t("In the review for this article on 29 October 2026, the TypeScript check and all eight tests passed in an isolated copy under Node.js 26.8.2. The configured Lambda runtime is Node.js 24. The tests cover those branches and template properties; an upload travelling all the way through S3, Lambda and DynamoDB still needs a separate integration check. No cloud deployment or complete emulator run was performed for this article. The README describes a local setup with floci and Docker.")}</p>
+            <CodeBlock language="bash">{`npm run build
+npm test -- --runInBand`}</CodeBlock>
+            <p className="project-text">{t("The TypeScript check and all eight tests pass. They check that the infrastructure is configured as expected and that the validator approves matching files and rejects invalid artifacts. The AWS requests are mocked, so checking the complete upload workflow requires a separate integration test.")}</p>
           </section>
 
           <section className="project-section" aria-labelledby="next">

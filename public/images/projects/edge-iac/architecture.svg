@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1260" viewBox="0 0 640 1260" role="img" aria-labelledby="title desc">
+<title id="title">Provision, configure, then review</title>
+<desc id="desc">CDKTF definitions generate the Terraform configuration. The VM stack provisions the instance and outputs addresses. The post-deploy stack configures DNS and calls Ansible. The core-router configuration is generated for manual review and application.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1 1 9 5 1 9" fill="none" stroke="#555" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:Arial,sans-serif;fill:#171717;text-anchor:middle}.heading{font-size:28px}.title{font-size:28px}.label{font-size:25px;fill:#454545}.small{font-size:22px;fill:#555}.node{fill:white;stroke:#888;stroke-width:1.5}.line{fill:none;stroke:#555;stroke-width:2.5;marker-end:url(#arrow)}</style>
+<rect width="640" height="1260" fill="#fafafa"/>
+<text x="320" y="62" class="heading">Provision, configure, then review</text>
+<rect x="50" y="120" width="540" height="148" rx="8" class="node"/>
+<g transform="translate(72 152)"><rect width="56" height="56" rx="8" fill="#f3f4f6"/><path transform="translate(10 10) scale(1.5)" fill="#3178C6" d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z"/></g>
+<text x="356" y="182" class="title">CDKTF definitions</text>
+<text x="320" y="231" class="label">Typed VM and integration settings</text>
+<rect x="50" y="380" width="540" height="148" rx="8" class="node"/>
+<g transform="translate(72 412)"><rect width="56" height="56" rx="8" fill="#f3f4f6"/><path transform="translate(10 10) scale(1.5)" fill="#844FBA" d="M1.44 0v7.575l6.561 3.79V3.787zm21.12 4.227l-6.561 3.791v7.574l6.56-3.787zM8.72 4.23v7.575l6.561 3.787V8.018zm0 8.405v7.575L15.28 24v-7.578z"/></g>
+<text x="356" y="442" class="title">VM stack</text>
+<text x="320" y="491" class="label">Provider resources + address outputs</text>
+<rect x="50" y="640" width="540" height="148" rx="8" class="node"/>
+<g transform="translate(72 670)"><rect width="56" height="56" rx="8" fill="#f3f4f6"/><path transform="translate(10 10) scale(1.5)" fill="#F38020" d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268zm2.7568-5.5634c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727"/></g><g transform="translate(136 670)"><rect width="56" height="56" rx="8" fill="#f3f4f6"/><path transform="translate(10 10) scale(1.5)" fill="#EE0000" d="M10.617 11.473l4.686 3.695-3.102-7.662zM12 0C5.371 0 0 5.371 0 12s5.371 12 12 12 12-5.371 12-12S18.629 0 12 0zm5.797 17.305c-.011.471-.403.842-.875.83-.236 0-.416-.09-.664-.293l-6.19-5-2.079 5.203H6.191L11.438 5.44c.124-.314.427-.52.764-.506.326-.014.63.189.742.506l4.774 11.494c.045.111.08.234.08.348-.001.009-.001.009-.001.023z"/></g>
+<text x="425" y="702" class="title">Post-deploy</text>
+<text x="320" y="751" class="label">DNS + inventory + Ansible roles</text>
+<rect x="50" y="900" width="540" height="148" rx="8" class="node"/>
+
+<text x="320" y="962" class="title">Core-router review</text>
+<text x="320" y="1011" class="label">Manual check and application of config</text>
+<path d="M320 268v25 M320 341v26" class="line"/>
+<text x="320" y="326" class="label">Provision infrastructure</text>
+<path d="M320 528v25 M320 601v26" class="line"/>
+<text x="320" y="586" class="label">Pass outputs to configuration</text>
+<path d="M320 788v25 M320 861v26" class="line"/>
+<text x="320" y="846" class="label">Generate configuration for approval</text>
+<text x="320" y="1195" class="small">From the IHK project documentation</text>
+<text x="320" y="1225" class="small">Core-router activation is a manual boundary</text>
+</svg>

@@ -22,7 +22,7 @@ export default function Footer() {
             </h3>
             <p className="text-sm text-gray-500 font-light leading-relaxed">{t("IT Specialist for System Integration")}</p>
             <p className="text-sm text-gray-500 font-light leading-relaxed">{t("Reliable infrastructure | Automated deployments")}</p>
-            <p className="text-sm text-gray-500 font-light leading-relaxed">{t("Operator of AS204801 | GL-IX Internet Exchange.")}</p>
+            <p className="text-sm text-gray-500 font-light leading-relaxed">{t("Linux, self-hosting and infrastructure projects.")}</p>
           </div>
 
           {/* Quick Links */}

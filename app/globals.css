@@ -193,3 +193,93 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* Local programming font, including the Nerd Font glyphs and Fira Code's calt ligatures. */
+@font-face {
+  font-family: "FiraCode Nerd Font";
+  src: url("/fonts/firacode-nerd/FiraCodeNerdFont-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+.project-article :where(code, pre, kbd, samp) {
+  font-family: "FiraCode Nerd Font", ui-monospace, monospace;
+  font-variant-ligatures: common-ligatures contextual;
+  font-feature-settings: "calt" 1;
+}
+
+.project-article .code-block {
+  margin-block: 1.75rem;
+  overflow: hidden;
+  border: 1px solid #d1d9e0;
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+.code-block-label {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid #d1d9e0;
+  background: #f6f8fa;
+  color: #59636e;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.project-article .code-block pre.shiki {
+  margin: 0;
+  padding: 1rem;
+  border-radius: 0;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  tab-size: 2;
+  white-space: pre;
+}
+
+.project-article .code-block pre.shiki code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: inherit;
+  font-weight: 400;
+  line-height: inherit;
+  letter-spacing: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+.dark .project-article .code-block {
+  border-color: #30363d;
+  background: #24292e;
+}
+
+.dark .code-block-label {
+  border-color: #30363d;
+  background: #161b22;
+  color: #9198a1;
+}
+
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+
+.code-block pre:focus-visible {
+  outline: 2px solid #0969da;
+  outline-offset: -2px;
+}
+
+.dark .code-block pre:focus-visible {
+  outline-color: #58a6ff;
+}

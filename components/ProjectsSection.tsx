@@ -16,7 +16,7 @@ const projects = [
   {
     id: 8,
     title: 'Edge IaC Automation Platform',
-    description: 'Infrastructure-as-Code platform that provisions edge VMs and configures BGP automatically using CDKTF, Terraform, and Ansible.',
+    description: 'My IHK project at Gentlent: provisioning edge VMs with CDKTF and Ansible, with an explicit review step for the core router.',
     tags: ['Terraform', 'Ansible', 'BGP'],
     link: '/projects/edge-iac',
   },
@@ -28,45 +28,25 @@ const projects = [
     link: '/projects/portfolio',
   },
   {
-    id: 1,
-    title: 'GL-IX Internet Exchange',
-    description: 'Contributing to Gentlent Internet Exchange infrastructure, improving regional connectivity and offering low-cost peering in central Europe.',
-    tags: ['BGP', 'Networking', 'Infrastructure'],
-    link: '/projects/gl-ix',
-  },
-  {
     id: 2,
-    title: 'NixOS Unified Config',
-    description: 'Building a unified NixOS configuration system for laptop, homelab server, and future machines with reproducible deployments.',
-    tags: ['NixOS', 'IaC', 'Automation'],
+    title: 'NixOS Homelab Config',
+    description: 'A modular NixOS configuration for my homelab, connecting system settings, service modules and encrypted secret references.',
+    tags: ['NixOS', 'Nix Flakes', 'sops-nix'],
     link: '/projects/nixos-config',
   },
   {
     id: 3,
     title: 'Homelab Infrastructure',
-    description: 'Containerized homelab services with optimized Dockerfiles. Automated VM provisioning using Ansible and Terraform.',
-    tags: ['Docker', 'Ansible', 'Terraform'],
+    description: 'Photos, documents and files in a NixOS homelab, with Caddy web routes and persistent application data.',
+    tags: ['NixOS', 'Caddy', 'Self-hosting'],
     link: '/projects/homelab',
-  },
-  {
-    id: 4,
-    title: 'Cross-Platform TV App',
-    description: 'Building a React Native application for Android TV, Fire TV, and Apple TV platforms with unified codebase.',
-    tags: ['React Native', 'TypeScript', 'Mobile'],
-    link: '/projects/tv-app',
-  },
-  {
-    id: 5,
-    title: 'AS204801 Network',
-    description: 'Operating own autonomous system for BGP peering and routing experiments, learning network operations at scale.',
-    tags: ['BGP', 'Networking', 'AS'],
-    link: '/projects/as204801',
   },
   {
     id: 6,
     title: 'Monitoring Stack',
-    description: 'Developing comprehensive monitoring and alerting setup for self-hosted services using modern observability tools.',
-    tags: ['Prometheus', 'Grafana', 'Kubernetes'],
+    description: 'Monitoring for my NixOS homelab is planned next. The implementation has not started yet.',
+    tags: ['NixOS', 'Monitoring'],
+    planned: true,
     link: '/projects/monitoring',
   },
 ];
@@ -144,6 +124,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
         <h3 className="text-2xl font-light text-gray-900 dark:text-white">
           {t(project.title)}
         </h3>
+        {project.planned && <p className="text-xs tracking-wide text-gray-500">{t("Planned")}</p>}
         <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed font-light">
           {t(project.description)}
         </p>
@@ -163,7 +144,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
           <Link
             href={href(project.link)}
             className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 font-light hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
-          >{t("View Project")}<span className="group-hover:translate-x-1 transition-transform duration-300">
+          >{t(project.planned ? "View plans" : "View Project")}<span aria-hidden="true" className="group-hover:translate-x-1 transition-transform duration-300">
               →
             </span>
           </Link>

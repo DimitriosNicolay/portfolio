@@ -116,6 +116,12 @@ Shared server page components live in `content/pages/`. Their German text is in 
 
 Use shared TSX content in `content/pages/`, with thin English route pages under `app/(en)/projects/`. Keep the shared styling and image directory convention. The Artifact Gateway example is at `/projects/artifact-gateway`. New article files are local drafts until reviewed; publishing requires explicit approval.
 
+## Code examples
+
+Use the server component `components/CodeBlock.tsx` with `language="typescript"`, `language="bash"` or `language="nix"`. Pass the exact source as its string child. Shiki generates GitHub Light/Dark token colors during rendering; the existing theme switch selects the palette through CSS variables. No browser highlighter is needed.
+
+Code uses locally hosted FiraCode Nerd Font with contextual ligatures. The full Nerd Font glyph set is preserved in WOFF2. Source and licenses are in `public/fonts/firacode-nerd/`. Inline code uses the same font; long blocks scroll within their container on narrow screens.
+
 ## License
 
 MIT
