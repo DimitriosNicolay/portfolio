@@ -129,7 +129,7 @@ export default function ContactSidebar() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div 
-          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity duration-300"
+          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-xs z-50 transition-opacity duration-300"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <div 

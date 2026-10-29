@@ -4,7 +4,7 @@ Personal portfolio for dnicolay.de, built with Next.js 16, React 19, TypeScript 
 
 ## Local development
 
-Use Node.js 20.9 or newer and npm.
+Use Node.js 24 LTS and npm (`.nvmrc` selects the supported major version).
 
 ```bash
 git clone https://github.com/DimitriosNicolay/portfolio.git
@@ -22,7 +22,15 @@ npm run build
 npm start
 ```
 
-The UI uses Arial/system fonts. No Google Fonts download is needed during the build or in the visitor's browser. Three.js supplies the WebGL background, and Lenis supplies smooth scrolling. Tailwind and PostCSS each have one configuration file.
+The UI uses Arial/system fonts. No Google Fonts download is needed during the build or in the visitor's browser. Three.js supplies the WebGL background, and Lenis supplies smooth scrolling. Tailwind CSS 4 uses the imports, source paths, typography plugin and dark variant in `app/globals.css`; PostCSS loads `@tailwindcss/postcss`.
+
+Tailwind 4 requires modern browsers: Safari 16.4+, Chrome 111+ or Firefox 128+.
+
+TypeScript stays on the supported 6.0 compiler API and ESLint on the 9.x line
+because the current React lint plugin does not yet declare ESLint 10 support.
+The Typography plugin pins an old CSS selector parser; a scoped override selects
+the compatible `postcss-selector-parser` 6.1.5 security fix. Revisit these limits
+when their upstream integrations support newer versions.
 
 ## Analytics
 
