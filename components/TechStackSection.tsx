@@ -1,5 +1,7 @@
 'use client';
 
+import { useLocale } from '@/contexts/LocaleContext';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAws } from '@fortawesome/free-brands-svg-icons';
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -64,13 +66,12 @@ const techStack = [
 ];
 
 export default function TechStackSection() {
+  const { t } = useLocale();
   return (
     <section id="tech" className="min-h-screen flex items-center justify-center px-8 py-24">
       <div className="max-w-5xl mx-auto w-full">
         <div className="space-y-6 mb-20">
-          <h2 className="text-4xl md:text-5xl font-light tracking-wide text-gray-900 dark:text-white">
-            Tech Stack
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-light tracking-wide text-gray-900 dark:text-white">{t("Tech Stack")}</h2>
           <div className="w-16 h-px bg-gray-900 dark:bg-white" />
         </div>
 
@@ -78,7 +79,7 @@ export default function TechStackSection() {
           {techStack.map((stack) => (
             <div key={stack.category} className="space-y-8">
               <h3 className="text-xl font-light text-gray-600 dark:text-gray-400 tracking-wider uppercase">
-                {stack.category}
+                {t(stack.category)}
               </h3>
               <div className="space-y-4">
                 {stack.technologies.map((tech) => (

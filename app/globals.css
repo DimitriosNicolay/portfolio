@@ -3,6 +3,7 @@
 @source "./";
 @source "../components";
 @source "../contexts";
+@source "../content";
 @plugin "@tailwindcss/typography";
 @custom-variant dark (&:where(.dark, .dark *));
 

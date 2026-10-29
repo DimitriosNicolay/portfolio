@@ -1,5 +1,7 @@
 'use client';
 
+import { useLocale } from '@/contexts/LocaleContext';
+
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -7,7 +9,7 @@ const projects = [
   {
     id: 9,
     title: 'Artifact Gateway',
-    description: 'Ein AWS-Lernprojekt mit CDK: Uploads in S3 prüfen, Ergebnisse in DynamoDB speichern und Fehlerpfade nachvollziehen.',
+    description: 'A hands-on AWS project with CDK: checking S3 uploads, recording results in DynamoDB, and exploring what happens when validation fails.',
     tags: ['AWS CDK', 'Lambda', 'TypeScript'],
     link: '/projects/artifact-gateway',
   },
@@ -70,6 +72,7 @@ const projects = [
 ];
 
 export default function ProjectsSection() {
+  const { t } = useLocale();
   const [currentPage, setCurrentPage] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const projectsPerPage = 6;
@@ -91,9 +94,7 @@ export default function ProjectsSection() {
     <section id="projects" className="min-h-screen flex items-center justify-center px-8 py-24">
       <div className="max-w-6xl mx-auto w-full">
         <div className="space-y-6 mb-20">
-          <h2 className="text-4xl md:text-5xl font-light tracking-wide text-gray-900 dark:text-white">
-            Projects
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-light tracking-wide text-gray-900 dark:text-white">{t("Projects")}</h2>
           <div className="w-16 h-px bg-gray-900 dark:bg-white" />
         </div>
 
@@ -113,7 +114,7 @@ export default function ProjectsSection() {
               onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
               disabled={currentPage === 1 || isTransitioning}
               className="w-10 h-10 border border-gray-300 dark:border-white/20 text-gray-600 dark:text-gray-400 hover:border-gray-500 dark:hover:border-white/40 hover:text-gray-900 dark:hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center"
-              aria-label="Previous page"
+              aria-label={t("Previous page")}
             >
               ←
             </button>
@@ -124,7 +125,7 @@ export default function ProjectsSection() {
               onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
               disabled={currentPage === totalPages || isTransitioning}
               className="w-10 h-10 border border-gray-300 dark:border-white/20 text-gray-600 dark:text-gray-400 hover:border-gray-500 dark:hover:border-white/40 hover:text-gray-900 dark:hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center"
-              aria-label="Next page"
+              aria-label={t("Next page")}
             >
               →
             </button>
@@ -136,14 +137,15 @@ export default function ProjectsSection() {
 }
 
 function ProjectCard({ project }: { project: (typeof projects)[0] }) {
+  const { t, href } = useLocale();
   return (
-    <div className="group h-full p-8 border border-gray-300 dark:border-white/10 hover:border-gray-500 dark:hover:border-white/30 transition-all duration-300">
+    <div className="group min-w-0 [overflow-wrap:anywhere] h-full p-8 border border-gray-300 dark:border-white/10 hover:border-gray-500 dark:hover:border-white/30 transition-all duration-300">
       <div className="space-y-6">
         <h3 className="text-2xl font-light text-gray-900 dark:text-white">
-          {project.title}
+          {t(project.title)}
         </h3>
         <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed font-light">
-          {project.description}
+          {t(project.description)}
         </p>
 
         <div className="flex flex-wrap gap-3 pt-2">
@@ -159,11 +161,9 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
 
         <div className="pt-4">
           <Link
-            href={project.link}
+            href={href(project.link)}
             className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 font-light hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
-          >
-            View Project
-            <span className="group-hover:translate-x-1 transition-transform duration-300">
+          >{t("View Project")}<span className="group-hover:translate-x-1 transition-transform duration-300">
               →
             </span>
           </Link>

@@ -104,9 +104,17 @@ handled separately. Transferring `.env` does not update already running backend
 containers or rotate credentials stored inside a database. Apply backend
 configuration changes through a coordinated maintenance operation.
 
+## Languages
+
+English keeps the existing URLs. German pages use `/de`, such as `/de/projects/artifact-gateway`. The DE/EN control beside the theme button opens the equivalent page and keeps query parameters and section anchors. Language is determined by the URL; theme preference continues to use localStorage.
+
+The two root layouts in `app/(en)/layout.tsx` and `app/de/layout.tsx` share `components/SiteLayout.tsx` and set the document language before rendering. Both versions are statically generated. `content/routes.ts` registers page components, titles and canonical/alternate language links. Unknown German paths return 404.
+
+Shared server page components live in `content/pages/`. Their German text is in `content/translations/de.json`; the English source text is the translation key. UI components use `useLocale()` with `lib/i18n/ui.de.json`. Internal links use `localizedPath()` or the context's `href()` helper. Translate new copy in the corresponding dictionary; keep service names, code and diagram labels in English. Run `node --test tests/i18n.test.mjs` to check translation completeness and route conversion.
+
 ## Project articles
 
-Keep the current TSX page format, shared styling and image directory convention. The Artifact Gateway example is at `/projects/artifact-gateway`. New article files are local drafts until reviewed; publishing requires explicit approval.
+Use shared TSX content in `content/pages/`, with thin English route pages under `app/(en)/projects/`. Keep the shared styling and image directory convention. The Artifact Gateway example is at `/projects/artifact-gateway`. New article files are local drafts until reviewed; publishing requires explicit approval.
 
 ## License
 

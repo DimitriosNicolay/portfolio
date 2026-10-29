@@ -20,6 +20,7 @@ jobs:
       - run: python3 -m unittest discover -s tests -v
       - run: npm run lint
       - run: npx tsc --noEmit
+      - run: node --test tests/i18n.test.mjs
       - run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: '1'

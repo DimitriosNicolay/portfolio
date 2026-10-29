@@ -1,11 +1,14 @@
 'use client';
 
+import { useLocale } from '@/contexts/LocaleContext';
+
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export default function ContactSidebar() {
+  const { t } = useLocale();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -62,22 +65,20 @@ export default function ContactSidebar() {
               <h3 className="text-lg font-light text-gray-900 dark:text-white tracking-wide">
                 Dimitrios Nicolay
               </h3>
-              <p className="text-xs text-gray-500 tracking-wider uppercase">
-                IT Specialist for System Integration
-              </p>
+              <p className="text-xs text-gray-500 tracking-wider uppercase">{t("IT Specialist for System Integration")}</p>
             </div>
 
             <div className="w-12 h-px bg-gray-300 dark:bg-white/20 mx-auto" />
 
             {/* Contact Details */}
             <div className="space-y-4 text-sm">
-              <ContactItem 
-                label="Email" 
+              <ContactItem
+                label={t("Email")}
                 value="hey@dnicolay.de"
                 link="mailto:hey@dnicolay.de"
               />
-              <ContactItem 
-                label="Network" 
+              <ContactItem
+                label={t("Network")}
                 value="AS204801"
                 link="https://bgp.tools/as/204801"
               />
@@ -108,7 +109,7 @@ export default function ContactSidebar() {
               <a
                 href="mailto:hey@dnicolay.de"
                 className="w-10 h-10 border border-gray-300 dark:border-white/20 flex items-center justify-center hover:border-gray-500 dark:hover:border-white/40 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
-                aria-label="Email"
+                aria-label={t("Email")}
               >
                 <FontAwesomeIcon icon={faEnvelope} className="text-gray-600 dark:text-gray-400" />
               </a>
@@ -121,18 +122,18 @@ export default function ContactSidebar() {
       <button
         onClick={() => setIsMobileMenuOpen(true)}
         className="lg:hidden fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black shadow-lg flex items-center justify-center hover:scale-110 transition-transform duration-300"
-        aria-label="Open Contact Menu"
+        aria-label={t("Open Contact Menu")}
       >
         <span className="text-lg font-light tracking-widest">DN</span>
       </button>
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div 
+        <div
           className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-xs z-50 transition-opacity duration-300"
           onClick={() => setIsMobileMenuOpen(false)}
         >
-          <div 
+          <div
             className="absolute bottom-0 left-0 right-0 bg-white dark:bg-black border-t border-gray-300 dark:border-white/10 p-8 rounded-t-3xl transform transition-transform duration-300"
             onClick={(e) => e.stopPropagation()}
           >
@@ -140,7 +141,7 @@ export default function ContactSidebar() {
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
-              aria-label="Close"
+              aria-label={t("Close")}
             >
               <FontAwesomeIcon icon={faTimes} className="text-xl" />
             </button>
@@ -151,22 +152,20 @@ export default function ContactSidebar() {
                 <h3 className="text-xl font-light text-gray-900 dark:text-white tracking-wide">
                   Dimitrios Nicolay
                 </h3>
-                <p className="text-sm text-gray-500 tracking-wider uppercase">
-                  IT Specialist for System Integration
-                </p>
+                <p className="text-sm text-gray-500 tracking-wider uppercase">{t("IT Specialist for System Integration")}</p>
               </div>
 
               <div className="w-16 h-px bg-gray-300 dark:bg-white/20 mx-auto" />
 
               {/* Contact Details */}
               <div className="space-y-4 text-center">
-                <ContactItem 
-                  label="Email" 
+                <ContactItem
+                  label={t("Email")}
                   value="hey@dnicolay.de"
                   link="mailto:hey@dnicolay.de"
                 />
-                <ContactItem 
-                  label="Network" 
+                <ContactItem
+                  label={t("Network")}
                   value="AS204801"
                   link="https://bgp.tools/as/204801"
                 />
@@ -199,7 +198,7 @@ export default function ContactSidebar() {
                 <a
                   href="mailto:hey@dnicolay.de"
                   className="w-12 h-12 border border-gray-300 dark:border-white/20 flex items-center justify-center hover:border-gray-500 dark:hover:border-white/40 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
-                  aria-label="Email"
+                  aria-label={t("Email")}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <FontAwesomeIcon icon={faEnvelope} className="text-gray-600 dark:text-gray-400 text-xl" />
@@ -227,7 +226,7 @@ function ContactItem({ label, value, link }: { label: string; value: string; lin
 
   if (link) {
     return (
-      <a 
+      <a
         href={link}
         target="_blank"
         rel="noopener noreferrer"
